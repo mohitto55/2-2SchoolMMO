@@ -24,7 +24,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     private byte[] receiveBuffer = new byte[dataBufferSize];
 
-
+    private string m_id;
 
     protected override void Awake()
     {
