@@ -20,17 +20,28 @@ namespace Server.Debug
             message = message.Insert(0, typeStr);
             if (LogEvent != null) LogEvent(message);
         }
-        public static void Log(LogType type, string[] messages)
+
+        public static void Log(LogType type, string head, string[] messages)
         {
             if (messages == null && messages.Length == 0)
                 return;
 
-            string message = "";
-            foreach (string msg in messages)
+            string message = head;
+            for(int i = 0; i < messages.Length; i++)
             {
-                message += msg;
+                message += messages[i];
+                if (i != messages.Length - 1)
+                {
+                    message += ", ";
+                }
             }
+
             Log(type, message);
+        }
+
+        public static void Log(LogType type, string[] messages)
+        {
+            Log(type, "", messages);
         }
     }
 }

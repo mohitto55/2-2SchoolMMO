@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Server.Debug;
 
 namespace Server.MySQL
 {
@@ -14,6 +15,7 @@ namespace Server.MySQL
 
         public static string[] ExcuteSQL(string cmd, MySqlConnection _sqlConnection)
         {
+            ServerDebug.Log(LogType.Log, "Excute SQL Cmd : " + cmd);
             List<string> data = new List<string>();
             try
             {
@@ -28,12 +30,12 @@ namespace Server.MySQL
                             data.Add(String.Format("{0}", reader[0]));
                         }
                     }
-
                 }
+                ServerDebug.Log(LogType.Log, "Excute SQL Cmd Success");
             }
             catch (Exception e)
             {
-
+                ServerDebug.Log(LogType.Warning, e.Message);
             }
             return data.ToArray();
         }
