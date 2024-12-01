@@ -24,7 +24,9 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     private byte[] receiveBuffer = new byte[dataBufferSize];
 
-    private string m_id;
+    public string m_id;
+
+    //Dictionary<string, byte[]> m_
 
     protected override void Awake()
     {
@@ -149,4 +151,16 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var sendData = packet.MergeData();
         stream.Write(sendData, 0, sendData.Length);
     }
+    public void SendPacket(EHandleType handleType, object data)
+    {
+        var handler = PacketHandlerPoolManager.GetPacketHandler(handleType);
+        handler.Init(data, Instance.m_id);
+        Instance.SendPacket(handler);
+        handler.ReturnPool();
+    }
+
+    //public void ReceivePacketCallback(EHandleType handleType,)
+    //{
+
+    //}
 }
