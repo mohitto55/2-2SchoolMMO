@@ -1,9 +1,10 @@
+using Runtime.Entity;
 using UnityEngine;
 using Utility.Action;
 
 public class Player : Character
 {
-    IAction<Character, Vector2> MoveAction;
+    IAction<Entity, Vector2> MoveAction;
     
     
 }
