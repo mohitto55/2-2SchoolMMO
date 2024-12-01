@@ -15,4 +15,9 @@ namespace Utility.Action
     {
         void ActionExecute(TTarget target);
     }
+
+    public interface IAction<TTarget, TParam>
+    {
+        void ActionExecute(TTarget target, TParam Param);
+    }
 }
