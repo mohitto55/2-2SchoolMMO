@@ -29,7 +29,6 @@ public class LoginView : UIView
         DtoAccount account = new DtoAccount(idString, passwordString);
         NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, account);
     }
-
     protected override void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
 

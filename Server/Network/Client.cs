@@ -1,6 +1,4 @@
-﻿
-using Server.Network;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 
@@ -26,7 +24,7 @@ public class Client
 
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
-        Server.m_packetHandlerQueue.Enqueue(handle);
+        IOCPServer.m_packetHandlerQueue.Enqueue(handle);
     }
     public void SendPacket(PacketHandler packetHandler)
     {
@@ -34,9 +32,8 @@ public class Client
     }
     public void Disconnect()
     {
-        Server.RemoveClient(m_id);
+        IOCPServer.RemoveClient(m_id);
     }
-
 }
 // TCP Wrapper
 public class TCP

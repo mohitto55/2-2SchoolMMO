@@ -23,12 +23,12 @@ public class IOCPServer
         try
         {
             m_tcpListener.Start();
-            Console.WriteLine($"Running server on {IPAddress.Any}:{m_port}");
+            //Console.WriteLine($"Running server on {IPAddress.Any}:{m_port}");
             m_tcpListener.BeginAcceptTcpClient(ServerConnectCallBack, null);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            //Console.WriteLine(ex);
         }
     }
     private void ServerConnectCallBack(IAsyncResult result)

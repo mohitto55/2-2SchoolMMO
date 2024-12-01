@@ -52,7 +52,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void Start()
     {
-
+        TryConnect();
     }
     public bool TryConnect()
     {
