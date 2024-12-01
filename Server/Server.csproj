@@ -12,4 +12,10 @@
     <PackageReference Include="MySql.Data" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="2-2OCP-CICD">
+      <HintPath>Lib\Network\2-2OCP-CICD.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

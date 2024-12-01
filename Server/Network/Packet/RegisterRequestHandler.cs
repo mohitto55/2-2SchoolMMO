@@ -1,10 +1,11 @@
-﻿using System.Security.Principal;
+﻿using Server.Debug;
+using Server.MySQL;
+using System.Security.Principal;
 
-public class LoginRequestHandler : PacketHandler<DtoAccount>
+public class RegisterRequestHandler : PacketHandler<DtoAccount>
 {
-    public LoginRequestHandler(object data, EHandleType type) : base(data, type)
+    public RegisterRequestHandler(object data, EHandleType type) : base(data, type)
     {
-        
     }
 
     protected override void OnFailed(DtoAccount data)
@@ -13,6 +14,10 @@ public class LoginRequestHandler : PacketHandler<DtoAccount>
 
     protected override void OnSuccess(DtoAccount data)
     {
-
+        DtoAccount dtoAccount = (DtoAccount)data;
+        if (dtoAccount != null)
+        {
+            DatabaseManager.RegisterPlayer(dtoAccount);
+        }
     }
 }

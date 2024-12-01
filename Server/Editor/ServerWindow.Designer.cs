@@ -36,8 +36,8 @@
             textBox2 = new TextBox();
             textBox1 = new TextBox();
             groupBox1 = new GroupBox();
-            label1 = new Label();
             label2 = new Label();
+            label1 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -117,15 +117,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Server Info";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(10, 25);
-            label1.Name = "label1";
-            label1.Size = new Size(17, 15);
-            label1.TabIndex = 7;
-            label1.Text = "IP";
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -134,6 +125,15 @@
             label2.Size = new Size(29, 15);
             label2.TabIndex = 8;
             label2.Text = "Port";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(10, 25);
+            label1.Name = "label1";
+            label1.Size = new Size(17, 15);
+            label1.TabIndex = 7;
+            label1.Text = "IP";
             // 
             // ServerWindow
             // 
@@ -146,6 +146,7 @@
             Controls.Add(ListBox_RecivedLog);
             Name = "ServerWindow";
             Text = "ServerWindow";
+            Load += ServerWindow_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

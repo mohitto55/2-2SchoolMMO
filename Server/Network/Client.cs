@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Debug;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 
@@ -22,6 +23,7 @@ public class Client
         list.RemoveAt(0);
         data = list.ToArray();
 
+        ServerDebug.Log(LogType.Log, type.ToString() + "Type Packet Process Receive");
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
         IOCPServer.m_packetHandlerQueue.Enqueue(handle);
@@ -124,7 +126,7 @@ public class TCP
         }
         catch (Exception _ex)
         {
-            Console.WriteLine($"Error receiving TCP data: {_ex}");
+            ServerDebug.Log(LogType.Error, $"Error receiving TCP data: {_ex}");
             Disconnect();
             m_onDisconnect.Invoke();
         }

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System;
 using System.Runtime.ConstrainedExecution;
+using Server.Debug;
 
 public abstract class PacketHandler
 {
@@ -90,11 +91,12 @@ public abstract class PacketHandler<T> : PacketHandler where T : DtoBase
 
         if (data?.errorCode > 0)
         {
-            Console.WriteLine($"[Warning] {data.errorMessage}");
+            ServerDebug.Log(LogType.Warning, $"[Warning] {data.errorMessage}");
             OnFailed((T)m_data);
         }
         else
         {
+            ServerDebug.Log(LogType.Log, data.ToString() + " OnSuccess");
             OnSuccess((T)m_data);
         }
 

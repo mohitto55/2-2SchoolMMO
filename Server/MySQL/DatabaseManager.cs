@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Server.Debug;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,7 @@ namespace Server.MySQL
 {
     public class DatabaseManager
     {
-        public static Socket server;
-
-        public MySqlConnection _sqlConnection;
+        public static MySqlConnection _sqlConnection;
 
         public const string DatabaseName = "db";
         public const string UserTable = "users";
@@ -35,10 +34,41 @@ namespace Server.MySQL
             _sqlConnection.Open();
         }
 
-        public void RegisterPlayer(DtoAccount dtoAccount)
+        public static void RegisterPlayer(DtoAccount dtoAccount)
         {
-            Assembly.GetExecutingAssembly().GetTypes().
-                Where(t => t.IsClass && t.IsSubclassOf(typeof(DBData))).ToString();
+            ServerDebug.Log(LogType.Log, "Try Register Player");
+
+            string[] userDataName = SerializeDataPropertyValue(dtoAccount);
+            string[] userDataValue = SerializeDataPropertyValue(dtoAccount);
+            ServerDebug.Log(LogType.Log, userDataName);
+            ServerDebug.Log(LogType.Log, userDataValue);
+            string cmd = MySQLUtility.GetInsertStr(UserTable, userDataName, userDataValue);
+            MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
+        }
+
+        public static string[] SerializeDataPropertyName(DtoBase dto)
+        {
+            PropertyInfo[] propertyInfos = dto.GetType().GetProperties();
+            string[] datas = new string[propertyInfos.Length];
+            for (int i = 0; i < propertyInfos.Length; i++)
+            {
+                PropertyInfo propertyInfo = propertyInfos[i];
+                datas[i] = propertyInfo.Name;
+            }
+            return datas;
+        }
+
+        public static string[] SerializeDataPropertyValue(DtoBase dto)
+        {
+            PropertyInfo[] propertyInfos = dto.GetType().GetProperties();
+            string[] datas = new string[propertyInfos.Length];
+            for (int i = 0; i < propertyInfos.Length; i++)
+            {
+                PropertyInfo propertyInfo = propertyInfos[i];
+                object value = propertyInfo.GetValue(dto);
+                datas[i] = value?.ToString() ?? string.Empty;
+            }
+            return datas;
         }
 
         class RegisterData : DBData
@@ -49,10 +79,6 @@ namespace Server.MySQL
             public string last_login;
             public string status;
             public string email;
-            //public string InsertTable(string tableName, string[] value)
-            //{
-            //    string command = "INSERT INTO " + tableName + " ";
-            //}
         }
     }
 }

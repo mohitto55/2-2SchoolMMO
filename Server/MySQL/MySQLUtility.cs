@@ -64,5 +64,36 @@ namespace Server.MySQL
             }
             return data.ToArray();
         }
+
+        public static string GetInsertStr(string table, string[] names, string[] values)
+        {
+            // 기본 INSERT 구문 시작
+            string interStr = "INSERT INTO " + table + " (";
+
+            // 열 이름 추가
+            for (int i = 0; i < names.Length; i++)
+            {
+                interStr += names[i];
+                if (i < names.Length - 1)
+                {
+                    interStr += ", ";
+                }
+            }
+
+            interStr += ") VALUES (";
+
+            // 값 추가
+            for (int i = 0; i < values.Length; i++)
+            {
+                interStr += "'" + values[i] + "'";
+                if (i < values.Length - 1)
+                {
+                    interStr += ", ";
+                }
+            }
+
+            interStr += ");";
+            return interStr;
+        }
     }
 }
