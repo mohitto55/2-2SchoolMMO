@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class LoginRequestHandler : PacketHandler<DtoAccount>
 {
     public LoginRequestHandler(object data, EHandleType type) : base(data, type)

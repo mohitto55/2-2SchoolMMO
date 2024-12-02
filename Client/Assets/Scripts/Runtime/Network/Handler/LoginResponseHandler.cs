@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class LoginResponseHandler : PacketHandler<DtoAccount>
 {
     public LoginResponseHandler(object data, EHandleType type) : base(data, type)
@@ -15,6 +12,6 @@ public class LoginResponseHandler : PacketHandler<DtoAccount>
 
     protected override void OnSuccess(DtoAccount data)
     {
-        SceneManager.LoadScene("MainMap");
+
     }
 }

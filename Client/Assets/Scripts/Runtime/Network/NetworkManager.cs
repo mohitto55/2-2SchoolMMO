@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 using TMPro;
+using UnityEditor.Sprites;
 using UnityEngine;
 /// <summary>
 /// 클라이언트 매니저
@@ -26,7 +28,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public string m_id;
 
-    //Dictionary<string, byte[]> m_
 
     protected override void Awake()
     {
@@ -51,7 +52,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void Start()
     {
-
+        TryConnect();
     }
     public bool TryConnect()
     {
@@ -151,16 +152,27 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         var sendData = packet.MergeData();
         stream.Write(sendData, 0, sendData.Length);
     }
+
     public void SendPacket(EHandleType handleType, object data)
     {
-        var handler = PacketHandlerPoolManager.GetPacketHandler(handleType);
-        handler.Init(data, Instance.m_id);
-        Instance.SendPacket(handler);
-        handler.ReturnPool();
+        if (data == null)
+        {
+            return;
+        }
+        var sendData = MergeData(handleType, data);
+        stream.Write(sendData, 0, sendData.Length);
     }
 
-    //public void ReceivePacketCallback(EHandleType handleType,)
-    //{
+    // 패킷데이터를 합쳐서 Byte형식으로 반환합니다.
+    public byte[] MergeData(EHandleType handleType, object data)
+    {
+        // | size(2byte) | type(1byte) | data(size byte)
+        short size = (short)(Marshal.SizeOf(data) + 1);
 
-    //}
+        var list = new List<byte>();
+        list.AddRange(BitConverter.GetBytes(size));
+        list.Add((byte)handleType);
+        list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
+        return list.ToArray();
+    }
 }

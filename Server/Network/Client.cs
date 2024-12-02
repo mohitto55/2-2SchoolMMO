@@ -1,10 +1,7 @@
-﻿
+﻿using Server.Debug;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Client
 {
@@ -26,23 +23,19 @@ public class Client
         list.RemoveAt(0);
         data = list.ToArray();
 
+        ServerDebug.Log(LogType.Log, type.ToString() + "Type Packet Process Receive");
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
         IOCPServer.m_packetHandlerQueue.Enqueue(handle);
     }
-    public void SendPacket(PacketHandler data)
+    public void SendPacket(PacketHandler packetHandler)
     {
-        m_tcp.SendPacket(data);
-    }
-    public void SendPacket(EHandleType type, object data)
-    {
-        m_tcp.SendPacket(type, data);
+        m_tcp.SendPacket(packetHandler);
     }
     public void Disconnect()
     {
         IOCPServer.RemoveClient(m_id);
     }
-
 }
 // TCP Wrapper
 public class TCP
@@ -133,7 +126,7 @@ public class TCP
         }
         catch (Exception _ex)
         {
-            Console.WriteLine($"Error receiving TCP data: {_ex}");
+            ServerDebug.Log(LogType.Error, $"Error receiving TCP data: {_ex}");
             Disconnect();
             m_onDisconnect.Invoke();
         }
@@ -146,26 +139,9 @@ public class TCP
     }
 
     // 클라이언트로 패킷을 전송합니다.
-    public void SendPacket(PacketHandler handler)
+    public void SendPacket(PacketHandler packet)
     {
-        var sendData = handler.MergeData();
-        m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
-    }
-    public void SendPacket(EHandleType type, object data)
-    {
-        if (data == null)
-        {
-            return;
-        }
-
-        // | size(2byte) | type(1byte) | data(size byte)
-        short size = (short)(Marshal.SizeOf(data) + 1);
-
-        var list = new List<byte>();
-        list.AddRange(BitConverter.GetBytes(size));
-        list.Add((byte)type);
-        list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
-        var sendData = list.ToArray();
+        var sendData = packet.MergeData();
 
         m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
     }

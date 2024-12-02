@@ -65,8 +65,6 @@ public static class SerializeHelper
         }
         catch (Exception ex)
         {
-            Debug.Log(ex);
-            Debug.Log(json);
             return null;
         }
     }
