@@ -9,6 +9,5 @@ public interface ICondition<TReturn> : ICondition
 
 public interface ICondition<TReturn, TTarget> : ICondition<TReturn>
 {
-    public TReturn GetCondition();
 
 }

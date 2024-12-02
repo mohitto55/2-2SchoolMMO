@@ -2,5 +2,6 @@ public enum EHandleType : byte
 {
     Default,
     LoginRequest,
-    LoginResponse
+    LoginResponse,
+    Move,
 }
