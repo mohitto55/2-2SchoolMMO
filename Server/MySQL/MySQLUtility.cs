@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.ApplicationServices;
 using MySql.Data.MySqlClient;
 using Server.Debug;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace Server.MySQL
 {
@@ -67,7 +70,12 @@ namespace Server.MySQL
             return data.ToArray();
         }
 
-        public static string GetInsertStr(string table, string[] names, string[] values)
+        //public static string GetSelectCmd(string table, )
+        //{
+        //    SELECT* FROM users WHERE id = @uid;
+        //}
+
+        public static string GetInsertCmd(string table, string[] names, string[] values)
         {
             // 기본 INSERT 구문 시작
             string interStr = "INSERT INTO " + table + " (";

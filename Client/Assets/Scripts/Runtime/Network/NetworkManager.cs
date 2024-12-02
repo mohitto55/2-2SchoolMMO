@@ -28,11 +28,14 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public string m_id;
 
+    private Dictionary<EHandleType, Queue<Action<object>>> _responseCallback;
 
     protected override void Awake()
     {
         base.Awake();
         PacketHandlerPoolManager.Init();
+
+        _responseCallback = new Dictionary<EHandleType, Queue<Action<object>>>();
     }
     private void Update()
     {
@@ -44,9 +47,12 @@ public class NetworkManager : MonoSingleton<NetworkManager>
             list.RemoveAt(0);
             data = list.ToArray();
 
+            Debug.Log(type.ToString() + " 패킷을 받았습니다.");
             var handle = PacketHandlerPoolManager.GetPacketHandler(type);
             handle.Init(data, m_id);
+
             handle.OnProcess();
+            InvokeResponseCallback(type, handle.data);
         }
     }
 
@@ -174,5 +180,27 @@ public class NetworkManager : MonoSingleton<NetworkManager>
         list.Add((byte)handleType);
         list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
         return list.ToArray();
+    }
+
+    public void RegisterResponseCallback(EHandleType handleType, Action<object> callback)
+    {
+        if (!_responseCallback.ContainsKey(handleType))
+        {
+            _responseCallback.Add(handleType, new Queue<Action<object>>());
+        }
+
+        _responseCallback[handleType].Enqueue(callback);
+    }
+
+    public void InvokeResponseCallback(EHandleType handleType, object data)
+    {
+        if (_responseCallback.ContainsKey(handleType))
+        {
+            while (_responseCallback[handleType].Count > 0)
+            {
+                Action<object> callback = _responseCallback[handleType].Dequeue();
+                callback?.Invoke(data);
+            }
+        }
     }
 }

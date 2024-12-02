@@ -29,6 +29,8 @@ public abstract class PacketHandler
         }
     }
 
+    public object? data => m_data;
+
     public abstract void Init(byte[] data, string id);
     public abstract void Init(object? data, string id);
 

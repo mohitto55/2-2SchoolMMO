@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\Runtime\Entity\Player\Input\AdvancedInputAction.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Player.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveData.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\CharacterModel.cs" />
     <Compile Include="Assets\Scripts\Utility\SerializeHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\FSM\StateMachine.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets\Scripts\Runtime\Entity\Player\Input\PlayerInputAction.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\MonoSIngleton.cs" />
     <Compile Include="Assets\Scripts\Utility\Logger\Debug.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsMove.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\LoginRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_MoveDir.cs" />
