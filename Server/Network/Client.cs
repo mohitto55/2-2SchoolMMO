@@ -1,8 +1,10 @@
 ﻿
-using Server.Network;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Client
 {
@@ -26,15 +28,19 @@ public class Client
 
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
-        Server.m_packetHandlerQueue.Enqueue(handle);
+        IOCPServer.m_packetHandlerQueue.Enqueue(handle);
     }
-    public void SendPacket(PacketHandler packetHandler)
+    public void SendPacket(PacketHandler data)
     {
-        m_tcp.SendPacket(packetHandler);
+        m_tcp.SendPacket(data);
+    }
+    public void SendPacket(EHandleType type, object data)
+    {
+        m_tcp.SendPacket(type, data);
     }
     public void Disconnect()
     {
-        Server.RemoveClient(m_id);
+        IOCPServer.RemoveClient(m_id);
     }
 
 }
@@ -140,9 +146,26 @@ public class TCP
     }
 
     // 클라이언트로 패킷을 전송합니다.
-    public void SendPacket(PacketHandler packet)
+    public void SendPacket(PacketHandler handler)
     {
-        var sendData = packet.MergeData();
+        var sendData = handler.MergeData();
+        m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
+    }
+    public void SendPacket(EHandleType type, object data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        // | size(2byte) | type(1byte) | data(size byte)
+        short size = (short)(Marshal.SizeOf(data) + 1);
+
+        var list = new List<byte>();
+        list.AddRange(BitConverter.GetBytes(size));
+        list.Add((byte)type);
+        list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
+        var sendData = list.ToArray();
 
         m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
     }
