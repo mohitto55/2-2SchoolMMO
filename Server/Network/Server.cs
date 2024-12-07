@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Net;
+using Server.Debug;
 
 public class IOCPServer
 {
@@ -16,19 +17,18 @@ public class IOCPServer
     {
         m_port = port;
         m_tcpListener = new TcpListener(IPAddress.Any, port);
-
     }
     public void Init()
     {
         try
         {
             m_tcpListener.Start();
-            Console.WriteLine($"Running server on {IPAddress.Any}:{m_port}");
+            ServerDebug.Log(LogType.Log, $"Running server on {IPAddress.Any}:{m_port}");
             m_tcpListener.BeginAcceptTcpClient(ServerConnectCallBack, null);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            ServerDebug.Log(LogType.Error, ex.ToString());
         }
     }
     private void ServerConnectCallBack(IAsyncResult result)
@@ -46,9 +46,8 @@ public class IOCPServer
             string tempID = $"Temp:{i}";
             if (m_clients.ContainsKey(tempID)) continue;
 
-
             var client = new Client(tempID, tcpClient);
-            Console.WriteLine($"Connect client on {tcpClient.Client.LocalEndPoint}");
+            ServerDebug.Log(LogType.Log, $"Connect client on {tcpClient.Client.LocalEndPoint}");
             m_clients.Add(tempID, client);
 
             return;

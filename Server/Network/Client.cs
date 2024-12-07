@@ -1,5 +1,6 @@
-﻿
-using Server.Network;
+﻿using Org.BouncyCastle.Bcpg;
+using Org.BouncyCastle.Utilities.Encoders;
+using Server.Debug;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
@@ -24,9 +25,10 @@ public class Client
         list.RemoveAt(0);
         data = list.ToArray();
 
+        ServerDebug.Log(LogType.Log, type.ToString() + "Type Packet Process Receive");
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
-        Server.m_packetHandlerQueue.Enqueue(handle);
+        IOCPServer.m_packetHandlerQueue.Enqueue(handle);
     }
     public void SendPacket(PacketHandler packetHandler)
     {
@@ -34,9 +36,8 @@ public class Client
     }
     public void Disconnect()
     {
-        Server.RemoveClient(m_id);
+        IOCPServer.RemoveClient(m_id);
     }
-
 }
 // TCP Wrapper
 public class TCP
@@ -127,7 +128,7 @@ public class TCP
         }
         catch (Exception _ex)
         {
-            Console.WriteLine($"Error receiving TCP data: {_ex}");
+            ServerDebug.Log(LogType.Error, $"Error receiving TCP data: {_ex}");
             Disconnect();
             m_onDisconnect.Invoke();
         }
@@ -142,6 +143,8 @@ public class TCP
     // 클라이언트로 패킷을 전송합니다.
     public void SendPacket(PacketHandler packet)
     {
+        ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
+
         var sendData = packet.MergeData();
 
         m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
