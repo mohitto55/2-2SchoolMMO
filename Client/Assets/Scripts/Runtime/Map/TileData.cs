@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using Utility.Data;
 
 [System.Serializable]
-public class TileSerializeData : StaticData
+public class TileSerializeData
 {
     public string id;
     public Vector3Int position;
