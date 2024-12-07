@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\UIDialogBox.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\ICondition.cs" />
-    <Compile Include="Assets\Scripts\Utility\Action\IAction.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\IModel.cs" />
@@ -74,7 +73,9 @@
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_LookDir.cs" />
     <Compile Include="Assets\Scripts\Runtime\UI\LoginView.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\CharacterViewModel.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Entity\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\MoveRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\IState.cs" />
@@ -104,7 +105,6 @@
     <Compile Include="Assets\Scripts\Runtime\State\Action\Action_Move.cs" />
     <Compile Include="Assets\Scripts\Utility\TMPTextMeshHelper\TMPTextPrinter.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueMarker.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Entity\Player\Input\AdvancedInputAction.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Player.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterRequestHandler.cs" />
@@ -115,7 +115,6 @@
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\PakcetHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Runtime\Data\Bo\Bo.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Entity\Player\Input\PlayerInputAction.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\MonoSIngleton.cs" />
     <Compile Include="Assets\Scripts\Utility\Logger\Debug.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterResponseHandler.cs" />

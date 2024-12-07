@@ -1,9 +1,18 @@
 using UnityEngine;
 
-namespace Runtime.Entity
+public class Entity : MonoBehaviour
 {
-    public class Entity : MonoBehaviour
+    protected virtual void Awake()
     {
 
     }
+    protected virtual void Start()
+    {
+
+    }
+    protected virtual void Update()
+    {
+
+    }
+    
 }

@@ -3,6 +3,7 @@ using Org.BouncyCastle.Utilities.Encoders;
 using Server.Debug;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 public class Client
@@ -33,6 +34,10 @@ public class Client
     public void SendPacket(PacketHandler packetHandler)
     {
         m_tcp.SendPacket(packetHandler);
+    }
+    public void SendPacket(EHandleType type, object data)
+    {
+        m_tcp.SendPacket(type, data);
     }
     public void Disconnect()
     {
@@ -146,6 +151,24 @@ public class TCP
         ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
 
         var sendData = packet.MergeData();
+
+        m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
+    }
+    public void SendPacket(EHandleType type, object data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        // | size(2byte) | type(1byte) | data(size byte)
+        short size = (short)(Marshal.SizeOf(data) + 1);
+
+        var list = new List<byte>();
+        list.AddRange(BitConverter.GetBytes(size));
+        list.Add((byte)type);
+        list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
+        var sendData =  list.ToArray();
 
         m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
     }

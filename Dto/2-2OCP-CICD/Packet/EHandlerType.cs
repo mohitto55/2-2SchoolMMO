@@ -5,4 +5,7 @@
     LoginResponse,
     RegisterRequest,
     RegisterResponse,
+    Transform,
+    ObjectInfoRequest,
+    ObjectInfoResponse,
 }

@@ -93,11 +93,22 @@ public class IOCPServer
     {
         m_clients[id].SendPacket(handler);
     }
+    public static void SendClient(string id, EHandleType handleType, object data)
+    {
+        m_clients[id].SendPacket(handleType, data);
+    }
     public static void SendAllClient(PacketHandler handler)
     {
         foreach (var item in m_clients)
         {
             item.Value.SendPacket(handler);
+        }
+    }
+    public static void SendAllClient(EHandleType handleType, object data)
+    {
+        foreach (var item in m_clients)
+        {
+            item.Value.SendPacket(handleType, data);
         }
     }
 }
