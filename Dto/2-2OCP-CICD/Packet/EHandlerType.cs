@@ -5,4 +5,6 @@
     LoginResponse,
     RegisterRequest,
     RegisterResponse,
+    CharacterRequest,
+    CharacterResponse,
 }
