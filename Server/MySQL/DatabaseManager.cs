@@ -29,7 +29,7 @@ namespace Server.MySQL
             _sqlConnection.Open();
         }
 
-        public static void RegisterPlayer(DtoAccount dtoAccount)
+        public static RegisterResult RegisterPlayer(DtoAccount dtoAccount)
         {
             ServerDebug.Log(LogType.Log, "Try Register Player");
             RegisterData registerData = new RegisterData(dtoAccount);
@@ -37,13 +37,13 @@ namespace Server.MySQL
             if (!IsValidUsername(dtoAccount.username))
             {
                 ServerDebug.Log(LogType.Log, dtoAccount.username + " 은 적절한 이름이 아닙니다.");
-                return;
+                return RegisterResult.NotValidUsername;
             }
 
             if (IsUserRegistered(dtoAccount.id))
             {
                 ServerDebug.Log(LogType.Log, dtoAccount.id + " 는 이미 존재하는 ID입니다.");
-                return;
+                return RegisterResult.AlreadyRegister;
             }
 
             string[] userDataName = GetFieldNames(registerData);
@@ -56,8 +56,18 @@ namespace Server.MySQL
             ServerDebug.Log(LogType.Log, "User Data Name : ", userDataName);
             ServerDebug.Log(LogType.Log, "User Data Value : ", userDataValue);
 
-            string cmd = MySQLUtility.GetInsertStr(UserTable, userDataName, userDataValue);
-            MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
+            string cmd = MySQLUtility.GetInsertCmd(UserTable, userDataName, userDataValue);
+
+            try
+            {
+                MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
+            }
+            catch (Exception ex)
+            {
+                return RegisterResult.Faild;
+            }
+
+            return RegisterResult.Success;
         }
 
         public static bool IsUserRegistered(string userId)
@@ -70,6 +80,21 @@ namespace Server.MySQL
                 return true;
             }
             return false;
+        }
+
+        public static LoginResult UserLogin(string userId, string password)
+        {
+            if (!IsUserRegistered(userId))
+            {
+                return LoginResult.NonexistentId;
+            }
+            string selectPasswordCmd = String.Format("SELECT password FROM {0} where id = '{1}';", UserTable, userId);
+            string[] data = MySQLUtility.ExcuteSQL(selectPasswordCmd, _sqlConnection);
+            if (data.Length > 0 && data[0] == password)
+            {
+                return LoginResult.Success;
+            }
+            return LoginResult.PasswordDoesNotMatch;
         }
 
         public static string[] GetFieldNames(object data)
@@ -97,6 +122,11 @@ namespace Server.MySQL
             return datas;
         }
 
+        //public static string[] GetUserData(string userId)
+        //{
+
+        //}
+
         /// <summary>
         /// 유저 이름이 생성될 수 있는 이름인지 확인하는 임시 함수
         /// 나중에 정규 표현식으로 확장가능
@@ -106,6 +136,21 @@ namespace Server.MySQL
         public static bool IsValidUsername(string username)
         {
             return username != null && username.Length > 0;
+        }
+
+        public enum RegisterResult
+        {
+            Success,
+            Faild,
+            NotValidUsername,
+            AlreadyRegister
+        }
+
+        public enum LoginResult
+        {
+            Success,
+            NonexistentId,
+            PasswordDoesNotMatch
         }
     }
 }

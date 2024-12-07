@@ -1,4 +1,6 @@
-﻿using Server.Debug;
+﻿using Org.BouncyCastle.Bcpg;
+using Org.BouncyCastle.Utilities.Encoders;
+using Server.Debug;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -146,6 +148,8 @@ public class TCP
     // 클라이언트로 패킷을 전송합니다.
     public void SendPacket(PacketHandler packet)
     {
+        ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
+
         var sendData = packet.MergeData();
 
         m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
