@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,7 +10,7 @@ namespace Runtime.Map
 
         public override string Export(TileBase data, Vector3Int param)
         {
-            return $"{param.x} {param.y}";
+            return $"{param.x}|{param.y}";
         }
     }
 }

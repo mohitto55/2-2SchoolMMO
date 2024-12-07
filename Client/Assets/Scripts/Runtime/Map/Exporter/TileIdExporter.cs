@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 namespace Runtime.Map
 {
@@ -12,12 +14,6 @@ namespace Runtime.Map
             if (data != null)
             return data.name;
             return "";
-        }
-
-        public override void Import(Tilemap tilemap, TileBase tile, object param)
-        {
-            string name = (string)param;
-            Debug.LogError(name);
         }
     }
 }

@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: New Rule Tile
+  m_Script: {fileID: 11500000, guid: 087097c2547068644ab564a31ffa2417, type: 3}
+  m_Name: TilemapData
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 755699513390169051, guid: 800de7e952088cd4491035864a391c5d, type: 3}
-  m_DefaultColliderType: 1
-  m_TilingRules: []
+  m_googleSheetURL: 
+  datas: []

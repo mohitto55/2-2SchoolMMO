@@ -1,96 +1,100 @@
 ﻿using DG.Tweening.Plugins.Core.PathCore;
+using NUnit.Framework;
 using Runtime.Map;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
 
 public static class TileMapSerializer
 {
-    public static void TileMapSerailize(Tilemap tileMap, string fileName, TileBaseExporter idExporter, List<TileBaseExporter> exporters)
+    public static void TileMapSerailize(Tilemap tileMap, Dictionary<string, TileData> tileDataDic, string folderPath, string fileName)
     {
-        exporters.Insert(0, idExporter);
-
         BoundsInt bounds = GetTilemapPlacedBounds(tileMap);
-        List<List<string>> tilesData = new List<List<string>>();
+        List<string> tilesJsonData = new List<string>();
 
-        // 첫번째 줄에 데이터의 타입 이름 적기
-        tilesData.Add(new List<string>());
-        foreach (TileBaseExporter exporter in exporters)
-        {
-            string data = exporter.DataType +",";
-            tilesData[0].Add(data);
-        }
 
         // 두번째 줄부터 타일의 데이터 넣기
-        for (int y = bounds.yMin; y <= bounds.yMax; y++)
-        {          
-            for (int x = bounds.xMin; x <= bounds.xMax; x++)
-            {
-                tilesData.Add(new List<string>());
-                foreach (TileBaseExporter exporter in exporters)
-                {
-                    Vector3Int cellPosition = new Vector3Int(x, y, 0);
-                    TileBase tile = tileMap.GetTile(cellPosition);
-
-                    string data = exporter.Export(tile, cellPosition);
-
-                    data += ",";
-
-                    tilesData[tilesData.Count - 1].Add(data);
-                }            
-            }
-        }
-
-        // 타일 데이터를 csv로 변환
-        string delimiter = ",";
-        StringBuilder sb = new StringBuilder();
-        for (int y = 0; y < tilesData.Count; y++)
+        List<TileSerializeData> tileDatas = GetPlacedTiles(tileMap);
+        foreach (TileSerializeData tileData in tileDatas)
         {
-            for (int x = 0; x < tilesData[y].Count; x++)
+            Debug.Log(tileData.id);
+            if (tileDataDic.ContainsKey(tileData.id))
             {
-                sb.Append(string.Join(delimiter, tilesData[y][x]));
+                tileData.SetTileData(tileDataDic[tileData.id]);
             }
-            sb.AppendLine();
+
+            tilesJsonData.Add(JsonUtility.ToJson(tileData));
         }
 
         try
         {
-            string folderPath = GetFolderPath("CSV");
-            string path = GetFilePath("CSV", fileName);
+            //string folderPath = PathHelper.GetFolderPath("Json");
+            string path = folderPath + '/' + fileName;
 
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            Debug.Log(path);
-            using (StreamWriter outStream = System.IO.File.CreateText(path))
-            {
-                outStream.WriteLine(sb);
-            }
+            SaveTilesToJson(tilesJsonData, path);
         }
         catch (Exception e)
         {
-            {
-                Debug.LogError("타일맵 변환 도중 실패했습니다. " + e.ToString());
-            }
+            Debug.LogError("타일맵 변환 도중 실패했습니다. " + e.ToString());
         }
     }
-    public static void TileMapGenerate(Tilemap tileMap, string fileName, TileBaseExporter idExporter, List<TileBaseExporter> exporters)
+
+    static void SaveTilesToJson(List<string> tilesJsonData, string filePath)
     {
-        string folderPath = GetFolderPath("CSV");
-        string path = GetFilePath("CSV", fileName);
+        // TileDataList 객체로 감싸기
+        TileDataList tileDataList = new TileDataList(tilesJsonData);
+
+        // List<string>을 JSON 문자열로 변환
+        string json = JsonUtility.ToJson(tileDataList, true);
+
+        // JSON 문자열을 파일에 저장
+        using (StreamWriter outStream = System.IO.File.CreateText(filePath))
+        {
+            outStream.WriteLine(json);
+            outStream.Close();
+        }
+        Debug.Log("Tiles JSON saved to: " + filePath);
+    }
+    public static void TileMapGenerate(Tilemap tileMap, Dictionary<string, Tile> tileDic, string fileName)
+    {
+        string folderPath = PathHelper.GetFolderPath("CSV");
+        string path = PathHelper.GetFilePath("CSV", fileName);
 
         if (!Directory.Exists(folderPath))
             Directory.CreateDirectory(folderPath);
 
-        using (StreamReader stream = System.IO.File.OpenText(path))
+        List<string> lines = new List<string>();
+
+        // StreamReader를 사용하여 파일 읽기
+        using (StreamReader reader = new StreamReader(path))
         {
-            Debug.Log(stream);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                // 읽은 각 라인을 리스트에 추가
+                string[] split = line.Split(',');
+                TileBase tile = null;
+                for (int i = 0; i < split.Length; i++)
+                {
+                    //Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                    //TileBase tile = tileMap.GetTile(cellPosition);
+
+                    //tile = exporters[i].Import(tileMap, tileDic, tile, split[i]);
+                }
+                lines.Add(line);
+                Debug.Log(line);
+            }
         }
     }
     static BoundsInt GetTilemapPlacedBounds(Tilemap tileMap)
@@ -126,16 +130,28 @@ public static class TileMapSerializer
         bounds.yMax = maxY;
         return bounds;
     }
-    static string GetApplicationDataPath
+
+    static List<TileSerializeData> GetPlacedTiles(Tilemap tileMap)
     {
-        get { return Application.dataPath; }
-    }
-    static string GetFolderPath(string saveFolder)
-    {
-        return GetApplicationDataPath + '/' + saveFolder;
-    }
-    static string GetFilePath(string saveFolder, string fileName)
-    {
-        return GetFolderPath(saveFolder) + '/' + fileName + ".csv";
+        List<TileSerializeData> tiles = new List<TileSerializeData>();
+        BoundsInt bounds = tileMap.cellBounds;
+        for (int y = bounds.yMin; y < bounds.yMax; y++)
+        {
+            for (int x = bounds.xMin; x < bounds.xMax; x++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+
+                // 해당 위치에 타일이 있는지 확인
+                TileBase tile = tileMap.GetTile(cellPosition);
+                if (tile != null) // 타일이 존재하는 경우
+                {
+                    TileSerializeData tileData = new TileSerializeData();
+                    tileData.position = new Vector3Int(x, y, 0);
+                    tileData.id = tile.name;
+                    tiles.Add(tileData);
+                }
+            }
+        }
+        return tiles;
     }
 }
