@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Action_Move : IAction<Character>
+public class Action_Move : IAction<Vector2>
 {
-    public void Execute(Character target)
+    public void Execute(Vector2 target)
     {
-
+        NetworkManager.Instance.SendPacket(EHandleType.Move, new DtoVector() { });
     }
 }
