@@ -1,3 +1,4 @@
+
 public abstract class Condition_Base<TReturn, TTarget> : ICondition<TReturn, TTarget>
 {
     protected TTarget _target;

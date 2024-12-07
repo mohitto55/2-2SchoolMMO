@@ -1,4 +1,6 @@
-﻿public interface IComponentSystem
+﻿using Arch.Core;
+
+public interface ComponentSystem
 {
-    public void Tick(World world);
+    public void Tick(World world, float dt);
 }
