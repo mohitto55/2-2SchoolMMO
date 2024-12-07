@@ -1,6 +1,6 @@
 ﻿using Arch.Core;
 
-public interface ComponentSystem
+public abstract class ComponentSystem
 {
-    public void Tick(World world, float dt);
+    public abstract void Tick(World world, double dt);
 }

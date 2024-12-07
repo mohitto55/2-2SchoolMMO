@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 
 [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
-public struct DtoCharacter
+public class DtoCharacter
 {
     [MarshalAs(UnmanagedType.I4, SizeConst = 50)]
     public int uid; // Ä³¸¯ÅÍ °íÀ¯ ID
@@ -18,9 +18,8 @@ public struct DtoCharacter
     public float gold; // °ñµå
     [MarshalAs(UnmanagedType.I4, SizeConst = 50)]
     public int map; // ¸Ê ID
-
-
-    // 
+    [MarshalAs(UnmanagedType.I4, SizeConst = 50)]
+    public DtoVector position; // ¸Ê ID
 }
 
 [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
