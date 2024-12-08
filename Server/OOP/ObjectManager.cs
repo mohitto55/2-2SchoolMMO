@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Server.Debug;
 using Windows.Services.Maps;
 
 public static class ObjectManager
@@ -8,6 +9,7 @@ public static class ObjectManager
     static World _world => _entityMgr.world;
 
     static Dictionary<int, GameObject> _gameObjects = new();
+
 
     public static void Init()
     {
@@ -22,10 +24,11 @@ public static class ObjectManager
 
     public static GameObject CreatePlayer()
     {
+
         var player = new Character(_world.Create(
             new PositionComponent(0,0),
             new VelocityComponent(0, 0),
-            new PacketSendTimer(5, 0)));
+            new PacketSendTimer(0.1, 0)));
         _gameObjects.Add(player.entity.Id, player);
         return player;
     }
