@@ -6,6 +6,8 @@
     RegisterRequest,
     RegisterResponse,
     Transform,
+    PlayerObjectIDRequest,
+    PlayerObjectIDResponse,
     ObjectInfoRequest,
     ObjectInfoResponse,
 }

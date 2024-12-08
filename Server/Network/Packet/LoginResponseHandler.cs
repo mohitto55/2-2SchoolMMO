@@ -14,5 +14,6 @@ public class LoginResponseHandler : PacketHandler<DtoMessage>
 
     protected override void OnSuccess(DtoMessage data)
     {
+
     }
 }

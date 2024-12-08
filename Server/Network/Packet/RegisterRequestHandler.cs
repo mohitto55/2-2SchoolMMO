@@ -14,15 +14,15 @@ public class RegisterRequestHandler : PacketHandler<DtoAccount>
 
     protected override void OnSuccess(DtoAccount data)
     {
-        DtoAccount dtoAccount = (DtoAccount)data;
-        if (dtoAccount != null)
+        if (data != null)
         {
-            DatabaseManager.RegisterResult result = DatabaseManager.RegisterPlayer(dtoAccount);
+            DatabaseManager.RegisterResult result = DatabaseManager.RegisterPlayer(data);
             var handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.RegisterResponse);
             DtoMessage message = new DtoMessage();
             message.message = result.ToString();
             handler.Init(message, m_id);
             IOCPServer.SendClient(m_id, handler);
+
         }
     }
 }

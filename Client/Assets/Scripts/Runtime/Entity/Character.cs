@@ -2,21 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Character : Entity
 {
+    private DtoObjectInfo _objectInfo;
+    private SpriteRenderer _sr;
+    private Animator _anim;
+
+
     IAction<Vector2> _moveAction;
     IAction<Vector2> _positionSyncAction;
 
-
-
     Dictionary<string, ICondition> _conditions = new Dictionary<string, ICondition>();
 
+
+    public Vector3 targetPosition;
+    public Vector3 currentVelocity;
+    public Vector3 directVelocity;
     protected override void Awake()
     {
         _moveAction = new Action_Move();
+
+        _sr = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
     }
 
 
+    public void SetObjectInfo(DtoObjectInfo _objectInfo)
+    {
+    }
+    public void SetTransform(DtoTransform data)
+    {
+        targetPosition = new Vector2(data.dtoPosition.x, data.dtoPosition.y);
+        directVelocity = new Vector2(data.dtoVelocity.x, data.dtoVelocity.y);
+        currentVelocity = new Vector2(data.dtoVelocity.x, data.dtoVelocity.y);
+    }
+    public void DeadReckoning()
+    {
+        
+        transform.position += (directVelocity).normalized * Time.deltaTime;
+    }
+    protected override void Update()
+    {
+        base.Update();
+        DeadReckoning();
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10);
+
+    }
     /// <summary>
     /// 컨디션을 가입시킵니다
     /// </summary>

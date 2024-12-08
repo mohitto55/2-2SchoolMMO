@@ -1,9 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-
-public class DtoObjectInfo : DtoBase
+[StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
+public class DtoObjectInfo : DtoEntityBase
 {
-    [MarshalAs(UnmanagedType.I4)]
-    public int EntityID;
 
 
 }

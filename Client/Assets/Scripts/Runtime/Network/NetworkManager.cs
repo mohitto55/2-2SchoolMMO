@@ -1,12 +1,15 @@
 using Runtime.BT.Singleton;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
+using static UnityEngine.Application;
 /// <summary>
 /// 클라이언트 매니저
 /// </summary>
@@ -22,7 +25,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     [SerializeField]
     private int server_port = 4826;
     [SerializeField]
-    private static int dataBufferSize = 4096;
+    private static int dataBufferSize = 512;
 
     private byte[] receiveBuffer = new byte[dataBufferSize];
 
@@ -30,15 +33,24 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     private Dictionary<EHandleType, Queue<Action<object>>> _responseCallback;
 
+    public bool AutoLoginTry;
+    [ShowIf("AutoLoginTry", true)]
+    public string loginID;
+    [ShowIf("AutoLoginTry", true)]
+    public string loginPassword;
+
     protected override void Awake()
     {
         base.Awake();
+        if (this.IsDestroyed()) return;
+        DontDestroyOnLoad(this);
         PacketHandlerPoolManager.Init();
 
         _responseCallback = new Dictionary<EHandleType, Queue<Action<object>>>();
-    }
+    } 
     private void Update()
     {
+        Debug.Log(packetQueue.Count);
         while (packetQueue.Count > 0)
         {
             var data = packetQueue.Dequeue();
@@ -58,7 +70,14 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void Start()
     {
-        TryConnect();
+        if(TryConnect())
+        {
+            if (AutoLoginTry)
+            {
+                DtoAccount loginAccount = new DtoAccount("", loginID, loginPassword);
+                Instance.SendPacket(EHandleType.LoginRequest, loginAccount);
+            }
+        }
     }
     public bool TryConnect()
     {
@@ -161,10 +180,9 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     public void SendPacket(EHandleType handleType, object data)
     {
-        if (data == null)
-        {
-            return;
-        }
+        if (stream == null) return;
+        if (data == null) return;
+
         var sendData = MergeData(handleType, data);
         stream.Write(sendData, 0, sendData.Length);
     }

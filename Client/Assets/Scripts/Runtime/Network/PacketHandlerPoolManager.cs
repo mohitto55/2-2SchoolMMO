@@ -15,6 +15,8 @@ public static class PacketHandlerPoolManager
 
     public static void Init()
     {
+
+
         // 어셈블리안의 핸들러 타입을 전부 수색
         var assembly = Assembly.GetExecutingAssembly();
         var types = assembly.GetTypes().Where(_ => _.IsSubclassOf(typeof(PacketHandler)));
@@ -38,7 +40,7 @@ public static class PacketHandlerPoolManager
 
             m_packetHandlerPool[packetType].Add((PacketHandler?)Activator.CreateInstance(type, null, EHandleType.Default));
 
-            Console.WriteLine(packetType);
+            //Console.WriteLine(packetType);
         }
 
 

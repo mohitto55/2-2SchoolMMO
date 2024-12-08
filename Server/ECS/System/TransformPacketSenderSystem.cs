@@ -8,14 +8,15 @@ public class TransformPacketSenderSystem : ComponentSystem
 {
     public override void Tick(World world, double dt)
     {
-        var query = new QueryDescription().WithAll<PacketSendTimer, PositionComponent>();
+        var query = new QueryDescription().WithAll<PacketSendTimer, PositionComponent, VelocityComponent>();
 
         world.Query(in query,(Entity entity,
             ref PacketSendTimer sendTimer,
-            ref PositionComponent position) =>
+            ref PositionComponent position,
+            ref VelocityComponent velocity) =>
         {
             sendTimer.elasedTime += (float)dt;
-            if(sendTimer.sendTime > sendTimer.elasedTime)
+            if(sendTimer.sendTime <= sendTimer.elasedTime)
             {
                 sendTimer.elasedTime = 0;
 
@@ -27,6 +28,11 @@ public class TransformPacketSenderSystem : ComponentSystem
                     dtoPosition = new DtoVector()
                     {
                         x = position.x, y = position.y
+                    },
+                    dtoVelocity = new DtoVector()
+                    {
+                        x = velocity.vx,
+                        y = velocity.vy
                     }
                 });
             }
