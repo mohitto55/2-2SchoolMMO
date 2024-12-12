@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
+[StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode), System.Serializable]
 public class DtoVector : DtoBase
 {
     [MarshalAs(UnmanagedType.R4)]

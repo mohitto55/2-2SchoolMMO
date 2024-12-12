@@ -63,32 +63,41 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\UIDialogBox.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\ICondition.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Map\Chunk.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\IModel.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\SOTileData.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\MapTileRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\IAction.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\ForceDialoguePlayMarker.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DGNode.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerFall.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_LookDir.cs" />
+    <Compile Include="Assets\Scripts\Utility\Data\StaticData.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileIdExporter.cs" />
+    <Compile Include="Assets\Scripts\Utility\Serialize\DataExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\UI\LoginView.cs" />
+    <Compile Include="Assets\Scripts\Utility\Data\GoogleSheetLoader.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\CharacterViewModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Utility\Excel\GoogleSheetsParser.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Network\Handler\MoveRequestHandler.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Map\Map.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\IState.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\IValueEnumable.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\FSM\IFSM.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\PacketHandlerPoolManager.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileBaseExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerIdle.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialoguePrinterHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Configuration.cs" />
-    <Compile Include="Assets\Scripts\Runtime\DB\StaticData.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\MVVM.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Network\Handler\EHandleType.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\Transition.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TilePositionExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\EntityViewModel.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Input.cs" />
@@ -103,12 +112,17 @@
     <Compile Include="Assets\Scripts\Runtime\State\State\State_Base.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\ISingleValue.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\Action_Move.cs" />
+    <Compile Include="Assets\Scripts\Utility\Serialize\PathHelper.cs" />
     <Compile Include="Assets\Scripts\Utility\TMPTextMeshHelper\TMPTextPrinter.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueMarker.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Player.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Map\MapSerializer.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\MapTileResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\CharacterModel.cs" />
+    <Compile Include="Assets\Scripts\Utility\Data\GoogleSheetTable.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Utility\SerializeHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\FSM\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveSystem.cs" />
@@ -119,6 +133,7 @@
     <Compile Include="Assets\Scripts\Utility\Logger\Debug.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsMove.cs" />
+    <Compile Include="Assets\Scripts\Utility\Data\SheetTypeAttributes.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\LoginRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_MoveDir.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Character.cs" />
@@ -1317,6 +1332,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
       <Private>False</Private>
@@ -1331,6 +1350,10 @@
     </Reference>
     <Reference Include="Unity.Collections.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
@@ -1363,6 +1386,10 @@
     </Reference>
     <Reference Include="NuGetForUnity">
       <HintPath>Library\ScriptAssemblies\NuGetForUnity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">

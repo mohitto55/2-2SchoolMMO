@@ -34,14 +34,14 @@ public class LoginView : UIView
             //DtoAccount registerAccount = new DtoAccount("Mohitto", "jjs", "2024");
             //NetworkManager.Instance.RegisterResponseCallback(EHandleType.RegisterResponse, RegisterCallback);
             //NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, registerAccount);
-            DtoUserCharacterData userCharacterData = new DtoUserCharacterData();
-            //userCharacterData.characters = new DtoCharacter[2];
-            //userCharacterData.characters = new DtoCharacter();
-            //userCharacterData.characters.name = "테스트이름1";
-            //userCharacterData.characters[1] = new DtoCharacter();
-            //userCharacterData.characters[1].name = "테스트이름2";
+            //DtoUserCharacterData userCharacterData = new DtoUserCharacterData();
+            ////userCharacterData.characters = new DtoCharacter[2];
+            ////userCharacterData.characters = new DtoCharacter();
+            ////userCharacterData.characters.name = "테스트이름1";
+            ////userCharacterData.characters[1] = new DtoCharacter();
+            ////userCharacterData.characters[1].name = "테스트이름2";
 
-            NetworkManager.Instance.SendPacket(EHandleType.CharacterRequest, userCharacterData);
+            //NetworkManager.Instance.SendPacket(EHandleType.CharacterRequest, userCharacterData);
         }
     }
     public void TryLogin()

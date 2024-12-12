@@ -5,7 +5,7 @@ public class Chunk
 {
     public BoundsInt bounds;
 
-    public void Active(Tilemap tilemap, TileFactory tileFactory)
+    public void Active(Tilemap tilemap)
     {
 
     }

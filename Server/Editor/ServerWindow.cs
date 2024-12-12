@@ -1,4 +1,5 @@
 ﻿using Server.Debug;
+using Server.Map;
 using Server.MySQL;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,14 @@ namespace Server
         {
             InitializeComponent();
 
-            ListBox_RecivedLog.DrawMode = DrawMode.OwnerDrawVariable;
-            ListBox_RecivedLog.MeasureItem += ListBox_RecivedLog_MeasureItem;
-            ListBox_RecivedLog.DrawItem += ListBox_RecivedLog_DrawItem;
+            //ListBox_RecivedLog.DrawMode = DrawMode.OwnerDrawVariable;
+            //ListBox_RecivedLog.MeasureItem += ListBox_RecivedLog_MeasureItem;
+            //ListBox_RecivedLog.DrawItem += ListBox_RecivedLog_DrawItem;
 
             ServerDebug.LogEvent += AddItemBoxText;
+            MapManager.Init();
 
             ObjectManager.Init();
-
 
             PacketHandlerPoolManager.Init();
 
@@ -34,22 +35,25 @@ namespace Server
 
             IOCPServer server = new IOCPServer(4826);
             server.Init();
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 while (server.Run())
                 {
                 }
             });
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 while (ObjectManager.Run())
                 {
                 }
             });
+
+
         }
 
         private void AddItemBoxText(string text)
         {
 
-            ListBox_RecivedLog.SelectedIndex = ListBox_RecivedLog.Items.Count - 1;
             // UI 스레드에서만 ListBox_RecivedLog를 수정할 수 있으므로, Invoke를 사용하여 스레드 안전하게 작업을 처리
             if (ListBox_RecivedLog.InvokeRequired)
             {
