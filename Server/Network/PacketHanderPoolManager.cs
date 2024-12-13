@@ -37,7 +37,7 @@ public static class PacketHandlerPoolManager
 
             m_packetHandlerPool[packetType].Add((PacketHandler?)Activator.CreateInstance(type, null, EHandleType.Default));
 
-            Console.WriteLine(packetType);
+            //Console.WriteLine(packetType);
         }
 
 

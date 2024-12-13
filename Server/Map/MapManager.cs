@@ -23,27 +23,29 @@ namespace Server.Map
                 if (mapFile == "")
                     continue;
                 string mapName = mapFile.Split('.')[0];
-                ServerDebug.Log(LogType.Log, mapName + "맵 생성 시작");
+                ServerDebug.Log(LogType.Log, mapName + " 맵 생성 시작");
 
                 string mapPath = mapFolderPath + "\\"+ mapFile;
                 List<DtoTile> tileDataList = LoadFromJson(mapPath);
 
                 if (!mapTable.ContainsKey(mapName))
                 {
-                    mapTable.Add(mapName, new Map(tileDataList));
+                    mapTable.Add(mapName, new Map(mapName, tileDataList));
                 }
                 else { 
                     ServerDebug.Log(LogType.Error, $"{mapName}맵은 이미 존재합니다.");
                 }
+                ServerDebug.Log(LogType.Log, mapName + " 맵 생성 완료");
             }
         }
 
-        public static List<DtoTile> GetMapTiles(string map)
+        public static List<DtoChunk> GetSurroundChunks(string map, DtoVector position, int surroundDst = 1)
         {
             if (mapTable.ContainsKey(map))
             {
-                return mapTable[map].Tiles;
+                return mapTable[map].GetSurroundChunks(position, surroundDst);
             }
+            ServerDebug.Log(LogType.Warning, map + "이라는 이름의 맵은 존재하지 않습니다. 청크를 반환할 수 있습니다.");
             return null;
         }
 

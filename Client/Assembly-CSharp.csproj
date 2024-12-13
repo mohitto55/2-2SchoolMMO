@@ -66,13 +66,13 @@
     <Compile Include="Assets\Scripts\Runtime\Map\Map\Chunk.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\TransformHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\IModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\SOTileData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\MapTileRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\IAction.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\ForceDialoguePlayMarker.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DGNode.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerFall.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_LookDir.cs" />
     <Compile Include="Assets\Scripts\Utility\Data\StaticData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileIdExporter.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Assets\Scripts\Utility\DesignPattern\FSM\IFSM.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\PacketHandlerPoolManager.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileBaseExporter.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerIdle.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\PlayerObjectIDResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialoguePrinterHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Configuration.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\MVVM.cs" />
@@ -102,8 +102,6 @@
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Input.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\SD\SDEntity.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerMove.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\State\PlayerState\State_PlayerJump.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\SIngleton.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\ITransition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\LoginResponseHandler.cs" />
@@ -115,12 +113,12 @@
     <Compile Include="Assets\Scripts\Utility\Serialize\PathHelper.cs" />
     <Compile Include="Assets\Scripts\Utility\TMPTextMeshHelper\TMPTextPrinter.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueMarker.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Entity\Player.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\MapTileResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\CharacterModel.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Entity\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Data\GoogleSheetTable.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Utility\SerializeHelper.cs" />

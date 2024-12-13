@@ -8,11 +8,15 @@ using Runtime.BT.Singleton;
 using UnityEngine.UIElements;
 public class MapGenerator : MonoSingleton<MapGenerator>
 {
+    [SerializeField] Character _character;
     [SerializeField] Tilemap _tileMap;
     [SerializeField] SOTileData _soTileData;
     [SerializeField] string _mapName;
 
+    [SerializeField] int chunkSurroundDst = 1;
+
     Dictionary<string, TileData> _tileTable;
+    Dictionary<Vector2, DtoChunk> mapChunk = new Dictionary<Vector2, DtoChunk>();
     private void Awake()
     {
         _tileTable = _soTileData.GetTileTable();
@@ -23,36 +27,50 @@ public class MapGenerator : MonoSingleton<MapGenerator>
         if (Input.GetKeyDown(KeyCode.V))
         {
             Debug.Log("요청");
-            RequestMapData();
+            RequestMapChunk();
         }
     }
-    public void RequestMapData()
+    public void RequestMapChunk()
     {
-        DtoMessage message = new DtoMessage();
-        message.message = _mapName;
-        NetworkManager.Instance.SendPacket(EHandleType.MapTileRequest, message);
+        DtoChunkRequest chunkRequest = new DtoChunkRequest();
+        chunkRequest.mapName = _mapName;
+        chunkRequest.position = new DtoVector() { x = _character.transform.position.x, y = _character.transform.position.y };
+        chunkRequest.surroundDst = chunkSurroundDst;
+
+        NetworkManager.Instance.SendPacket(EHandleType.MapTileRequest, chunkRequest);
     }
 
-    public void GenerateMap(List<DtoTileData> tiles)
+    void ChunkUpdate()
     {
-        Debug.LogWarning("리스트 카운트 : " + tiles.Count);
 
-        foreach (var tile in tiles)
+    }
+    public void GenerateMap(DtoChunk chunk)
+    {
+        if (chunk == null)
         {
-            string id = tile.id;
-            Debug.LogWarning(id);
-            if (_tileTable.ContainsKey(id))
-            {
-                TileData tileData = _tileTable[id];
-                Vector3Int position = new Vector3Int((int)tile.x, (int)tile.y, 0);
-                Debug.LogWarning(id + " " + position);
+            Debug.LogWarning("NULL");
 
-                _tileMap.SetTile(position, tileData._tile);
-            }
-            else
+            return;
+        }
+        Vector2 position = new Vector2(chunk.chunkID.x, chunk.chunkID.y);
+        if (!mapChunk.ContainsKey(position))
+        {
+            mapChunk.Add(position, chunk);
+        }
+
+        for (int i = 0; i < chunk.tileCount; i++)
+        {
+            DtoTileData tileData = chunk.dtoTiles[i];
+            if (!_tileTable.ContainsKey(tileData.id))
             {
-                Debug.LogWarning(id + "타일은 존재하지 않습니다.");
+                Debug.LogWarning(tileData.id + "타일은 존재하지 않습니다." + tileData.x + " " + tileData.y);
+                continue;
             }
+
+            Vector3Int tilePos = new Vector3Int((int)tileData.x, (int)tileData.y);
+            TileData tileBase = _tileTable[tileData.id];
+
+            _tileMap.SetTile(tilePos, tileBase._tile);
         }
     }
 }

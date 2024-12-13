@@ -1,20 +1,20 @@
 using System.Linq;
 
-public class MapTileResponseHandler : PacketHandler<DtoMapTile>
+public class MapTileResponseHandler : PacketHandler<DtoChunk>
 {
     public MapTileResponseHandler(object data, EHandleType type) : base(data, type)
     {
 
     }
 
-    protected override void OnFailed(DtoMapTile data)
+    protected override void OnFailed(DtoChunk data)
     {
 
     }
 
-    protected override void OnSuccess(DtoMapTile data)
+    protected override void OnSuccess(DtoChunk data)
     {
-        Debug.Log("카운트 " + data.count);
-        MapGenerator.Instance.GenerateMap(data.dtoTiles.ToList<DtoTileData>());
+        Debug.Log("타일 업데이트");
+        MapGenerator.Instance.GenerateMap(data);
     }
 }

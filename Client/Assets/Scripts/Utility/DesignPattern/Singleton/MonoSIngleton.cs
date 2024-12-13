@@ -40,7 +40,7 @@ namespace Runtime.BT.Singleton
             }
             else
             {
-                Destroy(gameObject);
+                DestroyImmediate(gameObject);
             }
         }
 
