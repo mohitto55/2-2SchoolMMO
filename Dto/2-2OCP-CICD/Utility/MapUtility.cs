@@ -1,6 +1,14 @@
 ﻿
 using System.Numerics;
 
+[System.Serializable]
+public enum EMapObjectType
+{
+    Tile,
+    EntityObject
+}
+
+
 public static class MapUtility
 {
     public const int ChunkSize = 4;

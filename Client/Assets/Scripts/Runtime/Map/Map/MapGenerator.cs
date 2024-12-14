@@ -51,7 +51,7 @@ public class MapGenerator : MonoSingleton<MapGenerator>
         chunkRequest.mapName = _mapName;
         chunkRequest.position = new DtoVector() { x = Center.x, y = Center.y };
         chunkRequest.surroundDst = _chunkSurroundDst;
-        NetworkManager.Instance.SendPacket(EHandleType.MapTileRequest, chunkRequest);
+        NetworkManager.Instance.SendPacket(EHandleType.ChunkUpdateRequest, chunkRequest);
     }
 
     private void ChunkUpdate()
@@ -91,7 +91,8 @@ public class MapGenerator : MonoSingleton<MapGenerator>
             Debug.LogWarning("청크가 존재하지 않습니다.");
             return;
         }
-        Vector2 position = new Vector2(chunkData.chunkID.x, chunkData.chunkID.y);
+        Vector2 position = new Vector2(chunkData.chunkPosition.x, chunkData.chunkPosition.y);
+
         string chunkType = chunk.GetType().Name;
 
         if (!mapChunk.ContainsKey(position))
@@ -102,8 +103,8 @@ public class MapGenerator : MonoSingleton<MapGenerator>
         if (!mapChunk[position].ContainsKey(chunkType))
         {
             mapChunk[position].Add(chunkType, chunk);
-            chunk.Active();
-        }        
+        }
+        chunk.Active();
     }
 
 }

@@ -1,6 +1,6 @@
-public class MapTileRequestHandler : PacketHandler<DtoMessage>
+public class ChunkUpdateRequestHandler : PacketHandler<DtoMessage>
 {
-    public MapTileRequestHandler(object data, EHandleType type) : base(data, type)
+    public ChunkUpdateRequestHandler(object data, EHandleType type) : base(data, type)
     {
     }
 

@@ -412,7 +412,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 0.25, y: 0.25, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -428,6 +428,16 @@ Tilemap:
   m_GameObject: {fileID: 640750453}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: -2, y: 1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 0
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741826
   - first: {x: -1, y: 2, z: 0}
     second:
       serializedVersion: 2
@@ -442,11 +452,15 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: ca688f5b0da90b640a59d7d6f7b4fda4, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 3cf4012e4fca15140b5d94f55bd8624b, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: ca6a66f8e2ae9c24c8c6b39c49206a0d, type: 3}
-  m_TileMatrixArray:
   - m_RefCount: 1
+    m_Data: {fileID: 47813434996547701, guid: 3421078018dc3934a8c1ab3b7bf89aa0, type: 3}
+  m_TileMatrixArray:
+  - m_RefCount: 2
     m_Data:
       e00: 1
       e01: 0
@@ -465,13 +479,15 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  m_TileObjectToInstantiateArray: []
+  m_TileObjectToInstantiateArray:
+  - m_RefCount: 1
+    m_Data: {fileID: 390299281394359726, guid: 67b8f3816f86da0428b99be85aaa778c, type: 3}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -1, y: 0, z: 0}
-  m_Size: {x: 1, y: 3, z: 1}
+  m_Origin: {x: -2, y: 0, z: 0}
+  m_Size: {x: 2, y: 3, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -750,6 +766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 2611588932481087734, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4137360829398282513, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -791,9 +811,54 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
       propertyPath: _tileMapChunkFactory._tileMap
       value: 
       objectReference: {fileID: 640750456}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[0]'
+      value: '"path":"_factoryTable","add_keys":{"$id":0,"$type":"System.Object[],
+        mscorlib","$rlength":5,"$rcontent":[{"$id":1,"$type":"EMapObjectType, 2-2OCP-CICD",0},{"$id":2,"$type":"EMapObjectType,
+        2-2OCP-CICD",0},{"$id":3,"$type":"EMapObjectType, 2-2OCP-CICD",1},{"$id":4,"$type":"EMapObjectType,
+        2-2OCP-CICD",0},{"$id":5,"$type":"EMapObjectType, 2-2OCP-CICD",1}]},"remove_keys":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[1]'
+      value: '"path":"_factoryTable.{0es}","value":{"$id":0,"$type":"TileMapChunkFactory,
+        Assembly-CSharp","_soTileData":null,"_tileMap":null}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[2]'
+      value: '"path":"_factoryTable.{0es}._soTileData","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[3]'
+      value: '"path":"_factoryTable.{0es}._tileMap","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[4]'
+      value: '"path":"_factoryTable.{1es}","value":{"$id":0,"$type":"TileMapChunkFactory,
+        Assembly-CSharp","_soTileData":null,"_tileMap":null}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[5]'
+      value: '"path":"_factoryTable.{1es}._soTileData","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: 'serializationData.PrefabModifications.Array.data[6]'
+      value: '"path":"_factoryTable.{1es}._tileMap","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714231148604150445, guid: 2e0bd7adfa538c2478e38188bdf6d145, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

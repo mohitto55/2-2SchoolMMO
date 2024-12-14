@@ -15,6 +15,7 @@ public class TileMapChunk : MapChunk<Vector2, ChunkTile, Tilemap>
         }
     }
 
+
     public override void Deactive()
     {
         foreach (var obj in Objects)
