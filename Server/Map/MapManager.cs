@@ -38,7 +38,7 @@ namespace Server.Map
             }
         }
 
-        public static List<DtoChunk> GetSurroundChunks(string map, DtoVector position, int surroundDst = 1)
+        public static List<DtoChunk> GetSurroundChunks(string map, DtoVector position, float surroundDst = 1)
         {
             if (mapTable.ContainsKey(map))
             {

@@ -1,4 +1,7 @@
 using System.Linq;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class MapTileResponseHandler : PacketHandler<DtoChunk>
 {
@@ -14,7 +17,7 @@ public class MapTileResponseHandler : PacketHandler<DtoChunk>
 
     protected override void OnSuccess(DtoChunk data)
     {
-        Debug.Log("타일 업데이트");
-        MapGenerator.Instance.GenerateMap(data);
+        Chunk<Vector2> tileMapChunk = ChunkGenerator.Instance.CreateChunk(typeof(TileMapChunk).Name, data);
+        MapGenerator.Instance.GenerateChunk(tileMapChunk, data);
     }
 }

@@ -9,7 +9,7 @@ public class DtoChunkRequest : DtoBase
 
     public DtoVector position;
 
-    [MarshalAs(UnmanagedType.I4)]
-    public int surroundDst = 1;
+    [MarshalAs(UnmanagedType.R4)]
+    public float surroundDst = 1;
 }
 

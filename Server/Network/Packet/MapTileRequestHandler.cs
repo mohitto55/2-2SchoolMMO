@@ -16,7 +16,7 @@ public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
     {
         string mapName = data.mapName;
         DtoVector position = data.position;
-        int surroundDst = data.surroundDst;
+        float surroundDst = data.surroundDst;
 
         List<DtoChunk> chunks = MapManager.GetSurroundChunks(mapName, position, surroundDst);
         foreach (var chunk in chunks)

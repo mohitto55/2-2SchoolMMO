@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\UIDialogBox.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\ICondition.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Map\Map\Chunk.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\TransformHandler.cs" />
@@ -82,6 +81,7 @@
     <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\CharacterViewModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Utility\Excel\GoogleSheetsParser.cs" />
+    <Compile Include="Assets\Scripts\Utility\DesignPattern\Factory\IFactory.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
@@ -96,11 +96,13 @@
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialoguePrinterHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Configuration.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\MVVM.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Chunk\TileMapChunk.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\Transition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TilePositionExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\EntityViewModel.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Dialogue.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Input.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Chunk\ChunkFactory.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\SD\SDEntity.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\SIngleton.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\ITransition.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="Assets\Scripts\Runtime\State\State\State_Base.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\ISingleValue.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\Action_Move.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Chunk\TileMapChunkFactory.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\PathHelper.cs" />
     <Compile Include="Assets\Scripts\Utility\TMPTextMeshHelper\TMPTextPrinter.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueMarker.cs" />
@@ -118,6 +121,8 @@
     <Compile Include="Assets\Scripts\Utility\Serialize\SaveData.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\RegisterRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\CharacterModel.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Chunk\ChunkGenerator.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Map\Chunk\Chunk.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Data\GoogleSheetTable.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapGenerator.cs" />

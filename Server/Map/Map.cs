@@ -13,12 +13,9 @@ namespace Server.Map
     public class Map
     {
         private List<DtoTile> _tileDatas;
-
         private string _name;
         public string Name => _name;
-
         Dictionary<DtoVector, DtoChunk> chunkMap = new Dictionary<DtoVector, DtoChunk>();
-
         public Map(string mapName, List<DtoTile> tileDatas) {
             _name = mapName;
 
@@ -80,7 +77,7 @@ namespace Server.Map
 
                     DtoChunk searchChunk = chunkMap[dtoVector];
 
-                    if (!MapUtility.IsChunkInLoadChunk(position, searchChunk, surroundDst))
+                    if (!MapUtility.IsChunkInLoadChunk(position, searchChunk.chunkID, surroundDst))
                         continue;
 
                     surroundChunks.Add(chunkMap[dtoVector]);

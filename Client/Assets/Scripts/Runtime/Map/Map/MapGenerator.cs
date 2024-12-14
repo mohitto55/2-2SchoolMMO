@@ -3,36 +3,45 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using Runtime.BT.Singleton;
 using System;
+using Sirenix.OdinInspector;
 
 public class MapGenerator : MonoSingleton<MapGenerator>
 {
-    [SerializeField] Character _character;
-    [SerializeField] Tilemap _tileMap;
-    [SerializeField] SOTileData _soTileData;
-    [SerializeField] string _mapName;
+    [SerializeField] private string _mapName;
+    [SerializeField, EnableIf("")] private float _chunkSurroundDst;
+    private Dictionary<Vector2, Dictionary<string, Chunk<Vector2>>> mapChunk = new Dictionary<Vector2, Dictionary<string, Chunk<Vector2>>>();
 
-    [SerializeField] int chunkSurroundDst = 10;
-    private int _chunkSize = 4;
-
-    Dictionary<string, TileData> _tileTable;
-    Dictionary<Vector2, DtoChunk> mapChunk = new Dictionary<Vector2, DtoChunk>();
-
-    [SerializeField] Transform testPosition;
-    private void Awake()
-    {
-        _tileTable = _soTileData.GetTileTable();
+    private Vector2 Center {
+        get
+        {
+            return Camera.main.transform.position;
+        }
     }
 
-    float duration = 1;
+    float _updateDuration = 1;
 
+    protected void Awake()
+    {
+        Camera mainCamera = Camera.main;
+
+        // 카메라의 z 값에 따라 월드 깊이를 명확히 설정 (예: z = 0 또는 다른 원하는 깊이)
+        float cameraDepth = Mathf.Abs(mainCamera.transform.position.z);
+
+        // 좌측과 우측 경계 월드 좌표 구하기
+        Vector3 leftWorldPos = mainCamera.ViewportToWorldPoint(new Vector3(0, 0.5f, cameraDepth));
+        Vector3 rightWorldPos = mainCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, cameraDepth));
+
+        // 좌우의 거리
+        float visibleWidth = Vector3.Distance(leftWorldPos, rightWorldPos);
+        _chunkSurroundDst = visibleWidth / 2 + MapUtility.ChunkSize / 2;
+    }
     public void Update()
     {
-
-        duration -= Time.deltaTime;
-        if (duration <= 0)
+        _updateDuration -= Time.deltaTime;
+        if (_updateDuration <= 0)
         {
             RequestMapChunk();
-            duration = 1;
+            _updateDuration = 1;
         }
         ChunkUpdate();
     }
@@ -40,65 +49,61 @@ public class MapGenerator : MonoSingleton<MapGenerator>
     {
         DtoChunkRequest chunkRequest = new DtoChunkRequest();
         chunkRequest.mapName = _mapName;
-        chunkRequest.position = new DtoVector() { x = testPosition.position.x, y = testPosition.position.y };
-        chunkRequest.surroundDst = chunkSurroundDst;
-
+        chunkRequest.position = new DtoVector() { x = Center.x, y = Center.y };
+        chunkRequest.surroundDst = _chunkSurroundDst;
         NetworkManager.Instance.SendPacket(EHandleType.MapTileRequest, chunkRequest);
     }
 
-    void ChunkUpdate()
+    private void ChunkUpdate()
     {
         List<Vector2> removeChunk = new List<Vector2>();
-        foreach (var kv in mapChunk)
+        foreach (var chunkTypes in mapChunk)
         {
-            DtoVector centerVector = new DtoVector() { x = testPosition.position.x, y = testPosition.position.y };
-            DtoChunk chunk = kv.Value;
-            Debug.DrawLine(testPosition.position, new Vector3(chunk.chunkID.x, chunk.chunkID.y));
-            if(!MapUtility.IsChunkInLoadChunk(centerVector, chunk, chunkSurroundDst))
+
+            DtoVector centerVector = new DtoVector() { x = Center.x, y = Center.y };
+            DtoVector chunkVector = new DtoVector() { x = chunkTypes.Key.x, y = chunkTypes.Key.y };
+
+            Debug.DrawLine(Center, new Vector3(chunkVector.x, chunkVector.y));
+
+            // 청크가 로드 범위 밖으로 벗어나면 비활성화 한다.
+            if (!MapUtility.IsChunkInLoadChunk(centerVector, chunkVector, _chunkSurroundDst))
             {
-                Debug.Log(chunkSurroundDst);
-                for (int i = 0; i < chunk.tileCount; i++)
+                foreach (var chunk in chunkTypes.Value)
                 {
-                    DtoTileData tileData = chunk.dtoTiles[i];
-                    Vector3Int tilePos = new Vector3Int((int)tileData.x, (int)tileData.y);
-                    _tileMap.SetTile(tilePos, null);
+                    chunk.Value.Deactive();
                 }
-                removeChunk.Add(kv.Key);
+                removeChunk.Add(chunkTypes.Key);
             }
+
         }
         foreach (var vec in removeChunk)
         {
-            if(mapChunk.ContainsKey(vec))
+            if (!mapChunk.ContainsKey(vec))
+                continue;
             mapChunk.Remove(vec);
         }
     }
 
-    public void GenerateMap(DtoChunk chunk)
+    public void GenerateChunk(Chunk<Vector2> chunk, DtoChunk chunkData)
     {
         if (chunk == null)
         {
-            Debug.LogWarning("NULL");
+            Debug.LogWarning("청크가 존재하지 않습니다.");
             return;
         }
-        Vector2 position = new Vector2(chunk.chunkID.x, chunk.chunkID.y);
+        Vector2 position = new Vector2(chunkData.chunkID.x, chunkData.chunkID.y);
+        string chunkType = chunk.GetType().Name;
+
         if (!mapChunk.ContainsKey(position))
         {
-            mapChunk.Add(position, chunk);
+            mapChunk.Add(position, new Dictionary<string, Chunk<Vector2>>());
         }
 
-        for (int i = 0; i < chunk.tileCount; i++)
+        if (!mapChunk[position].ContainsKey(chunkType))
         {
-            DtoTileData tileData = chunk.dtoTiles[i];
-            if (!_tileTable.ContainsKey(tileData.id))
-            {
-                Debug.LogWarning(tileData.id + "타일은 존재하지 않습니다." + tileData.x + " " + tileData.y);
-                continue;
-            }
-
-            Vector3Int tilePos = new Vector3Int((int)tileData.x, (int)tileData.y);
-            TileData tileBase = _tileTable[tileData.id];
-
-            _tileMap.SetTile(tilePos, tileBase._tile);
-        }
+            mapChunk[position].Add(chunkType, chunk);
+            chunk.Active();
+        }        
     }
+
 }

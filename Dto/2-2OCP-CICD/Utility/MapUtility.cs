@@ -11,7 +11,7 @@ public static class MapUtility
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public static bool IsPositionInLoadChunk(DtoVector center, DtoVector target, int surroundDst = 1)
+    public static bool IsPositionInLoadChunk(DtoVector center, DtoVector target, float surroundDst = 1)
     {
         float centerX = GetGridPosition(center).x;
         float centerY = GetGridPosition(center).y;
@@ -35,7 +35,7 @@ public static class MapUtility
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public static bool IsChunkInLoadChunk(DtoVector center, DtoChunk chunk, float surroundDst = 1)
+    public static bool IsChunkInLoadChunk(DtoVector center, DtoVector chunk, float surroundDst = 1)
     {
         float centerX = GetGridPosition(center).x;
         float centerY = GetGridPosition(center).y;
@@ -57,11 +57,8 @@ public static class MapUtility
     /// </summary>
     /// <param name="chunk"></param>
     /// <returns></returns>
-    public static DtoVector GetChunkCenter(DtoChunk chunk)
+    public static DtoVector GetChunkCenter(DtoVector chunkPosition)
     {
-        // 청크의 시작 위치를 구합니다.
-        DtoVector chunkPosition = chunk.chunkID;
-
         // 청크 중앙을 구합니다.
         return new DtoVector()
         {
