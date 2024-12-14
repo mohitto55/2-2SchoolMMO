@@ -14,7 +14,6 @@ namespace Server.Map
         public static Dictionary<string, Map> mapTable = new Dictionary<string, Map>();
 
 
-        // 테스트 코드
         public static void Init()
         {
             List<string> mapFiles = GetFolderFilesName(mapFolderPath);

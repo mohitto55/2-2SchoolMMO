@@ -19,7 +19,6 @@ public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
         int surroundDst = data.surroundDst;
 
         List<DtoChunk> chunks = MapManager.GetSurroundChunks(mapName, position, surroundDst);
-        ServerDebug.Log(LogType.Log, chunks.Count.ToString() + "청크 총 갯수");
         foreach (var chunk in chunks)
         {
             if (chunk == null)
@@ -29,8 +28,6 @@ public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
             }
 
             var handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.MapTileResponse);
-            ServerDebug.Log(LogType.Log, chunk.tileCount + "Tile 총 갯수");
-
             handler.Init(chunk, m_id);
             IOCPServer.SendClient(m_id, handler);
         }

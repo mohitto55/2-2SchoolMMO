@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>2_2OCP_CICD</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\2-2OCP-CICD\bin\Release\net8.0</BaseOutputPath>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>

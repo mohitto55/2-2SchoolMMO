@@ -13,10 +13,6 @@ namespace Server.Map
     public class Map
     {
         private List<DtoTile> _tileDatas;
-        public List<DtoTile> Tiles => _tileDatas;
-
-        private int _chunkSize = 4;
-        public int ChunkSize => _chunkSize;
 
         private string _name;
         public string Name => _name;
@@ -31,15 +27,11 @@ namespace Server.Map
             _tileDatas = tileDatas;
             ServerDebug.Log(LogType.Log, tileDatas.Count + "개의 타일을 생성 합니다.");
 
-            int maxTileCount = _chunkSize * _chunkSize;
+            int maxTileCount = MapUtility.ChunkSize * MapUtility.ChunkSize;
             foreach (var tile in _tileDatas)
             {
                 // 타일의 좌표를 사용해 청크 ID 계산
-                int chunkX = (int)Math.Floor(tile.position.x / _chunkSize);
-                int chunkY = (int)Math.Floor(tile.position.y / _chunkSize);
-                DtoVector chunkId = new DtoVector();
-                chunkId.x = chunkX;
-                chunkId.y = chunkY;
+                DtoVector chunkId = MapUtility.GetChunkPosition(tile.position);
 
                 // 해당 청크가 없으면 새로 생성
                 if (!chunkMap.ContainsKey(chunkId))
@@ -72,27 +64,30 @@ namespace Server.Map
         /// <param name="surroundSize"></param>
         /// <returns></returns>
 
-        public List<DtoChunk> GetSurroundChunks(DtoVector position, int surroundDst = 1)
+        public List<DtoChunk> GetSurroundChunks(DtoVector position, float surroundDst = 1)
         {
-            int centerX = (int)position.x / _chunkSize;
-            int centerY = (int)position.y / _chunkSize;
-            int surroundChunkSize = Math.Max(1, surroundDst / _chunkSize);
+            DtoVector center = MapUtility.GetChunkPosition(position);
+            int surroundChunkSize = (int)Math.Max(1, surroundDst / MapUtility.ChunkSize) + 1;
 
             List<DtoChunk> surroundChunks = new List<DtoChunk>();
-            for (int y = centerY - surroundChunkSize; y < centerY + surroundChunkSize; y++)
+            for (int y = (int)(center.y - surroundChunkSize); y < center.y + surroundChunkSize; y++)
             {
-                for (int x = centerX - surroundChunkSize; x < centerX + surroundChunkSize; x++)
+                for (int x = (int)(center.x - surroundChunkSize); x < center.x + surroundChunkSize; x++)
                 {
                     DtoVector dtoVector = new DtoVector() { x = x, y = y };
-                    if (chunkMap.ContainsKey(dtoVector))
-                    {
-                        surroundChunks.Add(chunkMap[dtoVector]);
-                    }
+                    if (!chunkMap.ContainsKey(dtoVector))
+                        continue;
+
+                    DtoChunk searchChunk = chunkMap[dtoVector];
+
+                    if (!MapUtility.IsChunkInLoadChunk(position, searchChunk, surroundDst))
+                        continue;
+
+                    surroundChunks.Add(chunkMap[dtoVector]);
                 }
             }
             return surroundChunks;
         }
-
         /// <summary>
         /// chunkMap에서 같은 벡터인지 체크하기 위한 컴페어 클래스
         /// </summary>
