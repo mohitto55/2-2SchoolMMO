@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System;
 using System.Diagnostics;
+using System.Security.Principal;
 
 
 public class LoginView : UIView
@@ -23,17 +24,25 @@ public class LoginView : UIView
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    Debug.Log("메시지 보내기");
-        //    DtoAccount loginAccount = new DtoAccount("", "jjs", "20242");
-        //    NetworkManager.Instance.RegisterResponseCallback(EHandleType.LoginResponse, LoginCallback);
-        //    NetworkManager.Instance.SendPacket(EHandleType.LoginRequest, loginAccount);
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("메시지 보내기");
+            //DtoAccount loginAccount = new DtoAccount("", "jjs", "20242");
+            //NetworkManager.Instance.RegisterResponseCallback(EHandleType.LoginResponse, LoginCallback);
+            //NetworkManager.Instance.SendPacket(EHandleType.LoginRequest, loginAccount);
 
-        //    //DtoAccount registerAccount = new DtoAccount("Mohitto", "jjs", "2024");
-        //    //NetworkManager.Instance.RegisterResponseCallback(EHandleType.RegisterResponse, RegisterCallback);
-        //    //NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, registerAccount);           
-        //}
+            //DtoAccount registerAccount = new DtoAccount("Mohitto", "jjs", "2024");
+            //NetworkManager.Instance.RegisterResponseCallback(EHandleType.RegisterResponse, RegisterCallback);
+            //NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, registerAccount);
+            //DtoUserCharacterData userCharacterData = new DtoUserCharacterData();
+            ////userCharacterData.characters = new DtoCharacter[2];
+            ////userCharacterData.characters = new DtoCharacter();
+            ////userCharacterData.characters.name = "테스트이름1";
+            ////userCharacterData.characters[1] = new DtoCharacter();
+            ////userCharacterData.characters[1].name = "테스트이름2";
+
+            //NetworkManager.Instance.SendPacket(EHandleType.CharacterRequest, userCharacterData);
+        }
     }
     public void TryLogin()
     {
@@ -66,6 +75,18 @@ public class LoginView : UIView
         DtoAccount account = new DtoAccount(usernameString, idString, passwordString);
         NetworkManager.Instance.RegisterResponseCallback(EHandleType.RegisterResponse, RegisterCallback);
         NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, account);
+
+
+
+
+        //DtoUserCharacterData userCharacterData = new DtoUserCharacterData();
+        ////userCharacterData.characters = new DtoCharacter[2];
+        ////userCharacterData.characters = new DtoCharacter();
+        ////userCharacterData.characters.name = "테스트이름1";
+        ////userCharacterData.characters[1] = new DtoCharacter();
+        ////userCharacterData.characters[1].name = "테스트이름2";
+
+        //NetworkManager.Instance.SendPacket(EHandleType.CharacterRequest, account);
     }
     protected override void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {

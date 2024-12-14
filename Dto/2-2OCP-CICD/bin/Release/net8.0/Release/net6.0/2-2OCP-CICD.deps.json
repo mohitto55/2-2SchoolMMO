@@ -7,19 +7,8 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "2-2OCP-CICD/1.0.0": {
-        "dependencies": {
-          "UnityEngine": "0.0.0.0"
-        },
         "runtime": {
           "2-2OCP-CICD.dll": {}
-        }
-      },
-      "UnityEngine/0.0.0.0": {
-        "runtime": {
-          "UnityEngine.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
         }
       }
     }
@@ -27,11 +16,6 @@
   "libraries": {
     "2-2OCP-CICD/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "UnityEngine/0.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

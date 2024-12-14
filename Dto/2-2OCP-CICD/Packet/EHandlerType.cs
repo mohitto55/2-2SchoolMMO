@@ -10,4 +10,6 @@
     PlayerObjectIDResponse,
     ObjectInfoRequest,
     ObjectInfoResponse,
+    MapTileRequest,
+    MapTileResponse,
 }

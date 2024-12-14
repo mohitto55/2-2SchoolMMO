@@ -22,7 +22,6 @@ public class RegisterRequestHandler : PacketHandler<DtoAccount>
             message.message = result.ToString();
             handler.Init(message, m_id);
             IOCPServer.SendClient(m_id, handler);
-
         }
     }
 }

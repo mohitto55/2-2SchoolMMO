@@ -1,4 +1,5 @@
 ﻿using Server.Debug;
+using Server.Map;
 using Server.MySQL;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Server
             ListBox_RecivedLog.DrawItem += ListBox_RecivedLog_DrawItem;
 
             ServerDebug.LogEvent += AddItemBoxText;
+
+            MapManager.Init();
 
             ObjectManager.Init();
 

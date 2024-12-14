@@ -50,7 +50,6 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     } 
     private void Update()
     {
-        Debug.Log(packetQueue.Count);
         while (packetQueue.Count > 0)
         {
             var data = packetQueue.Dequeue();

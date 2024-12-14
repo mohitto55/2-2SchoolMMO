@@ -14,7 +14,6 @@ public class PlayerController : MonoSingleton<PlayerController>
     public void SetTarget(Character target)
     {
         _target = target;
-        
     }
 
     private void Update()

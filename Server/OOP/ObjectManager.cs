@@ -24,7 +24,6 @@ public static class ObjectManager
 
     public static GameObject CreatePlayer()
     {
-
         var player = new Character(_world.Create(
             new PositionComponent(0,0),
             new VelocityComponent(0, 0),
