@@ -48,8 +48,6 @@ namespace Server
 
         private void AddItemBoxText(string text)
         {
-
-            ListBox_RecivedLog.SelectedIndex = ListBox_RecivedLog.Items.Count - 1;
             // UI 스레드에서만 ListBox_RecivedLog를 수정할 수 있으므로, Invoke를 사용하여 스레드 안전하게 작업을 처리
             if (ListBox_RecivedLog.InvokeRequired)
             {

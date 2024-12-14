@@ -2,6 +2,7 @@
 using Org.BouncyCastle.Utilities.Encoders;
 using Server.Debug;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -16,6 +17,7 @@ public class Client
 
     public bool isLogin = false;
     public string m_id;
+    public GameObject characterObject;
 
     public TCP m_tcp;
 
@@ -44,10 +46,136 @@ public class Client
         IOCPServer.RemoveClient(m_id);
     }
 }
+//public class UDP
+//{
+//    public const int dataBufferSize = 512;
+//
+//    public UdpClient m_socket;
+//
+//    private Action<byte[]> m_onPacketProcess;
+//    private Action m_onDisconnect;
+//
+//    private byte[] receiveBuffer = new byte[dataBufferSize];
+//
+//
+//    public UDP(UdpClient socket,
+//        Action<byte[]> onPacketProcess = null,
+//        Action onDisconnectProcess = null)
+//    {
+//        m_onDisconnect = onDisconnectProcess;
+//        m_onPacketProcess = onPacketProcess;
+//
+//        m_socket = socket;
+//        m_socket.BeginReceive(ReceiveCallback, null);
+//    }
+//
+//    List<byte> m_packetStream = new List<byte>();
+//    List<byte> m_packetHeader = new List<byte>();
+//    // 패킷완성에 필요한 크기
+//    short size;
+//
+//    private void ReceiveCallback(IAsyncResult result)
+//    {
+//        try
+//        {
+//            IPEndPoint EP = new IPEndPoint(IPAddress.Any, 4826);
+//            var bytes = m_socket.EndReceive(result, ref EP);
+//
+//            if (byteLength <= 0)
+//            {
+//                m_onDisconnect.Invoke();
+//                Disconnect();
+//                return;
+//            }
+//            byte[] data = new byte[byteLength];
+//            Array.Copy(receiveBuffer, data, byteLength);
+//            var list = new List<byte>(data);
+//
+//            // 모든 데이터를 쓸때까지 반복
+//            while (list.Count > 0)
+//            {
+//                // 헤더가 완성되지 않은 상태라면
+//                if (m_packetHeader.Count < 2)
+//                {
+//                    m_packetHeader.Add(list[0]);
+//                    list.RemoveAt(0);
+//                }
+//                else
+//                {
+//                    // 헤더가 완성된 상태라면 사이즈를 구함.
+//                    size = BitConverter.ToInt16(m_packetHeader.ToArray(), 0);
+//
+//                    // 사이즈와 같아질때까지 반복
+//                    if (m_packetStream.Count < size)
+//                    {
+//                        m_packetStream.Add(list[0]);
+//                        list.RemoveAt(0);
+//
+//                        if (m_packetStream.Count == size)
+//                        {
+//
+//                            m_onPacketProcess?.Invoke(m_packetStream.ToArray());
+//
+//                            m_packetStream.Clear();
+//                            m_packetHeader.Clear();
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            m_stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
+//        }
+//        catch (Exception _ex)
+//        {
+//            ServerDebug.Log(LogType.Error, $"Error receiving TCP data: {_ex}");
+//            Disconnect();
+//            m_onDisconnect.Invoke();
+//        }
+//    }
+//
+//    public void Disconnect()
+//    {
+//        m_stream.Close();
+//        m_socket.Close();
+//    }
+//
+//    // 클라이언트로 패킷을 전송합니다.
+//    public void SendPacket(PacketHandler packet)
+//    {
+//        ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
+//
+//        var sendData = packet.MergeData();
+//
+//        m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
+//    }
+//    public void SendPacket(EHandleType type, object data)
+//    {
+//        if (data == null)
+//        {
+//            return;
+//        }
+//
+//        // | size(2byte) | type(1byte) | data(size byte)
+//        short size = (short)(Marshal.SizeOf(data) + 1);
+//
+//        var list = new List<byte>();
+//        list.AddRange(BitConverter.GetBytes(size));
+//        list.Add((byte)type);
+//        list.AddRange(new List<byte>(SerializeHelper.StructureToByte(data)));
+//        var sendData = list.ToArray();
+//
+//        m_stream.BeginWrite(sendData, 0, sendData.Length, SendCallBack, null);
+//    }
+//    private void SendCallBack(IAsyncResult result)
+//    {
+//
+//    }
+//}
 // TCP Wrapper
 public class TCP
 {
-    public const int dataBufferSize = 4096;
+    public const int dataBufferSize = 512;
 
     public TcpClient m_socket;
 

@@ -53,7 +53,6 @@ public class IOCPServer
             return;
         }
     }
-
     public bool Run()
     {
         while (m_packetHandlerQueue.Count > 0)
@@ -81,9 +80,12 @@ public class IOCPServer
         }
         return clientNames;
     }
-    public static void RegisterClient(Client client)
+    public static Client ChangeClientID(string beforeClinetID,string afterClientID)
     {
-        m_clients.Add(client.m_id, client);
+        Client client = m_clients[beforeClinetID];
+        RemoveClient(beforeClinetID);
+        m_clients.Add(afterClientID, client);
+        return client;
     }
     public static void RemoveClient(string id)
     {

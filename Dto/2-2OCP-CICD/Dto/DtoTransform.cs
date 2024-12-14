@@ -4,4 +4,6 @@
 public class DtoTransform : DtoEntityBase
 {
     public DtoVector dtoPosition;
+    public DtoVector dtoVelocity;
+    public DtoVector dtoLookDir;
 }
