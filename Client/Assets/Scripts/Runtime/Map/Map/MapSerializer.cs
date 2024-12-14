@@ -1,4 +1,5 @@
 using Runtime.Map;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,7 +9,9 @@ public class MapSerializer : MonoBehaviour
     [SerializeField] Tilemap _tileMap;
     [SerializeField] SOTileData _soTileData;
     [SerializeField] string serilizeFileName;
-    public void Awake()
+
+    [Button]
+    public void GenerateMapJsonData()
     {
         Debug.Log(PathHelper.GetPojectParentFolder());
         List<TileBaseExporter> exporters = new List<TileBaseExporter>();
