@@ -8,11 +8,12 @@ public class CollisionSystem : ComponentSystem
         var query = new QueryDescription().WithAll<BoundColliderComponent, PositionComponent>();
 
 
+
         world.Query(in query, (Entity entityA,
          ref BoundColliderComponent boundA,
          ref PositionComponent positionA) =>
         {
-            
+            var changePos = positionA;
             var aMinX = positionA.x - (boundA.w / 2.0f);
             var aMaxX = positionA.x + (boundA.w / 2.0f);
             var aMinY = positionA.y - (boundA.h / 2.0f);
@@ -30,11 +31,21 @@ public class CollisionSystem : ComponentSystem
                 if(IsCollision(aMinX, aMinY, aMaxX, aMaxY, bMinX, bMinY, bMaxX, bMaxY))
                 {
                     if (entityA != entityB)
+                    {
                         contacts.Add(entityB);
+                        changePos.x -= (positionB.x - changePos.x);
+                        changePos.y -= (positionB.y - changePos.y);
+                    }
+
+
                 }
 
             });
-            boundA.contactsEntity = contacts;
+            if(contacts.Count > 0)
+            {
+                boundA.contactsEntity = contacts;
+                positionA = changePos;
+            }
         });
     }
     // 충돌 감지 메서드
