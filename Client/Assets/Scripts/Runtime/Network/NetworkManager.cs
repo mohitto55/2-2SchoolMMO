@@ -6,10 +6,7 @@ using System.Net.Sockets;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Sprites;
 using UnityEngine;
-using static UnityEngine.Application;
 /// <summary>
 /// 클라이언트 매니저
 /// </summary>
@@ -41,8 +38,14 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
     protected override void Awake()
     {
-        base.Awake();
-        if (this.IsDestroyed()) return;
+        if (HasInstance())
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+
+
+
         DontDestroyOnLoad(this);
         PacketHandlerPoolManager.Init();
 

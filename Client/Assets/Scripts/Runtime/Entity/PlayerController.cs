@@ -24,12 +24,18 @@ public class PlayerController : MonoSingleton<PlayerController>
             vec.z = -10;
             Camera.main.transform.position = vec;
         }
-        _axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        _axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized * 5;
+
+
+
+    }
+    private void FixedUpdate()
+    {
         if (_target == null) return;
 
         if (_axis != _fixedAxis)
         {
-            _fixedAxis = _axis;
+            _fixedAxis = _axis ;
 
             NetworkManager.Instance.SendPacket(EHandleType.Transform, new DtoTransform()
             {
@@ -38,10 +44,6 @@ public class PlayerController : MonoSingleton<PlayerController>
 
             _target.directVelocity = _fixedAxis.normalized;
         }
-    }
-    private void FixedUpdate()
-    {
-
     }
 
 }

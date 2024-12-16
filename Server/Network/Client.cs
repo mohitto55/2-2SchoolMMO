@@ -28,7 +28,6 @@ public class Client
         list.RemoveAt(0);
         data = list.ToArray();
 
-        ServerDebug.Log(LogType.Log, type.ToString() + "Type Packet Process Receive");
         var handle = PacketHandlerPoolManager.GetPacketHandler(type);
         handle.Init(data, m_id);
         IOCPServer.m_packetHandlerQueue.Enqueue(handle);
@@ -276,7 +275,7 @@ public class TCP
     // 클라이언트로 패킷을 전송합니다.
     public void SendPacket(PacketHandler packet)
     {
-        ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
+        //ServerDebug.Log(LogType.Log, $"Send : {packet.GetType().Name} To {m_socket?.Client.LocalEndPoint}");
 
         var sendData = packet.MergeData();
 

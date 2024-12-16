@@ -31,8 +31,8 @@ public class LoginRequestHandler : PacketHandler<DtoAccount>
         // 플레이어 캐릭터 생성
         var client = IOCPServer.ChangeClientID(m_id, $"{data.id}:{data.password}");
         client.m_id = $"{data.id}:{data.password}";
-        ServerDebug.Log(LogType.Log, $"{data.id}:{data.password} : Success Create Player!");
         var gameObject = ObjectManager.CreatePlayer();
+        ServerDebug.Log(LogType.Log, $"{data.id}:{data.password} : Success Create Player! ID : {gameObject.entity.Id}");
         client.characterObject = gameObject;
 
         IOCPServer.SendAllClient(EHandleType.Transform, new DtoTransform()

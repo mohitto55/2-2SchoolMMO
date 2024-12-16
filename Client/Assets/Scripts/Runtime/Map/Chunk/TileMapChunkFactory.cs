@@ -14,16 +14,18 @@ public class TileMapChunkFactory : ChunkFactory<TileMapChunk>
         if (_tileTable == null)
             _tileTable = _soTileData.GetTileTable();
 
+        DtoTileChunk tileChunk = (DtoTileChunk)param;
+
         TileMapChunk tileMapChunk = new TileMapChunk();
         tileMapChunk.Map = _tileMap;
-        tileMapChunk.Id = new UnityEngine.Vector2(param.chunkID.x, param.chunkID.y);
-        for (int i = 0; i < param.tileCount; i++)
+        tileMapChunk.Id = new UnityEngine.Vector2(param.chunkPosition.x, param.chunkPosition.y);
+
+        for (int i = 0; i < tileChunk.tileCount; i++)
         {
-            DtoTileData dtoTileData = param.dtoTiles[i];
+            DtoTileData dtoTileData = tileChunk.dtoTiles[i];
             TileData tileData = GetTileData(dtoTileData.id);
             if (tileData == null)
                 continue;
-
             tileMapChunk.Objects.Add(new ChunkTile()
             {
                 position = new UnityEngine.Vector3Int((int)dtoTileData.x, (int)dtoTileData.y),

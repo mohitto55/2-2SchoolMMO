@@ -1,34 +1,22 @@
 using Runtime.BT.Singleton;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class ChunkGenerator : MonoSingleton<ChunkGenerator>
+public class ChunkGenerator : SerializedMonoSingleton<ChunkGenerator>
 {
-    [SerializeField] List<Chunk<Vector2>> chunks = new List<Chunk<Vector2>>();
-    private Dictionary<string, ChunkFactory> _factoryTable;
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.Foldout), SerializeField]
+    private Dictionary<EMapObjectType, ChunkFactory> _factoryTable = new Dictionary<EMapObjectType, ChunkFactory>();
 
-    [SerializeField] TileMapChunkFactory _tileMapChunkFactory;
-    protected void Awake()
-    {
-        _factoryTable = new Dictionary<string, ChunkFactory>();
-        AddChunkFactory(_tileMapChunkFactory);
-    }
-    public Chunk<Vector2> CreateChunk(string id, DtoChunk chunk)
+
+    public Chunk<Vector2> CreateChunk(EMapObjectType id, DtoChunk chunk)
     {
         if (!_factoryTable.ContainsKey(id))
         {
             return null;
         }
         return _factoryTable[id].Create(chunk);
-    }
-
-    protected void AddChunkFactory(ChunkFactory factory)
-    {
-        string factoryId = factory.Id;
-        if (!_factoryTable.ContainsKey(factoryId))
-        {
-            _factoryTable.Add(factoryId, factory);
-        }
     }
 }
