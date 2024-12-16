@@ -89,8 +89,8 @@
     <Compile Include="Assets\Scripts\Runtime\Map\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\Reference\ValueAsset.cs" />
+    <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\IState.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\IValueEnumable.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\FSM\IFSM.cs" />

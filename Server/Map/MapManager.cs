@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Server.Debug;
+using Server.Map.Chunk;
 using Server.Map.Factory;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,14 @@ namespace Server.Map
 {
     public class MapManager
     {
-        private static string mapFolderPath = "C:\\Users\\admin\\git\\Unity\\2-2SchoolMMO\\Server\\Data";
+        private static string mapFolderPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Data");
         public static Dictionary<string, Map> mapTable = new Dictionary<string, Map>();
         public static Dictionary<EMapObjectType, ChunkFactory> chunkFactoryTable = new Dictionary<EMapObjectType, ChunkFactory>();
 
-        public static void CreateChunk()
+        public static void Init()
         {
             ChunkFactoryInit();
+            ServerDebug.Log(LogType.Error, mapFolderPath);
 
             /// Data폴더/맵이름폴더/청크타입json 
             List<string> mapNames = GetFoldersNameInFolder(mapFolderPath);
@@ -68,7 +70,7 @@ namespace Server.Map
             chunkFactoryTable.Add(EMapObjectType.EntityObject, new EntityObjectChunkFactory(EMapObjectType.EntityObject));
         }
 
-        public static List<T> CreateChunk<T>(EMapObjectType type, string map, DtoVector position, float surroundDst = 1) where T : DtoChunk
+        public static List<T> GetSurroundChunks<T>(EMapObjectType type, string map, DtoVector position, float surroundDst = 1) where T : DtoChunk
         {
             if (mapTable.ContainsKey(map))
             {

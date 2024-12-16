@@ -15,7 +15,7 @@ namespace Server.MySQL
 
 
         // AWS EC2에서 작동중인 Docker>MySQL로 연결한다.
-        public static string MySQLServerDNS => "13.125.54.178";
+        public static string MySQLServerDNS => "3.35.236.71";
         public static string ConnenctionStr => "host=" + MySQLServerDNS + ";Port=3306;Database=" + DatabaseName + "; UserName=root;Pwd=202411";
 
         public void Init()
