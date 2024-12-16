@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
 using Server.Debug;
 using System.Reflection;
 
@@ -7,10 +8,22 @@ namespace Server.MySQL
 {
     public class DatabaseManager
     {
+        public struct UserTable
+        {
+            public const string table = "users";
+        }
+
+        public struct InventoryTable
+        {
+            public const string table = "inventory";
+            public const string inventoryId = "inventory_id";
+            public const string userUid = "user_uid";
+            public const string itemId = "item_id";
+            public const string count = "count";
+        }
         public static MySqlConnection _sqlConnection;
 
         public const string DatabaseName = "db";
-        public const string UserTable = "users";
         public const string RecordTable = "record";
 
 
@@ -56,7 +69,7 @@ namespace Server.MySQL
             ServerDebug.Log(LogType.Log, "User Data Name : ", userDataName);
             ServerDebug.Log(LogType.Log, "User Data Value : ", userDataValue);
 
-            string cmd = MySQLUtility.GetInsertCmd(UserTable, userDataName, userDataValue);
+            string cmd = MySQLUtility.GetInsertCmd(UserTable.table, userDataName, userDataValue);
 
             try
             {
@@ -72,7 +85,7 @@ namespace Server.MySQL
 
         public static bool IsUserRegistered(string userId)
         {
-            string cmd = String.Format("SELECT id FROM {0} where id = '{1}';", UserTable, userId);
+            string cmd = String.Format("SELECT id FROM {0} where id = '{1}';", UserTable.table, userId);
             string[] data = MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
 
             if (data.Length > 0 && data[0] == userId)
@@ -88,7 +101,7 @@ namespace Server.MySQL
             {
                 return LoginResult.NonexistentId;
             }
-            string selectPasswordCmd = String.Format("SELECT password FROM {0} where id = '{1}';", UserTable, userId);
+            string selectPasswordCmd = String.Format("SELECT password FROM {0} where id = '{1}';", UserTable.table, userId);
             string[] data = MySQLUtility.ExcuteSQL(selectPasswordCmd, _sqlConnection);
             if (data.Length > 0 && data[0] == password)
             {
@@ -151,6 +164,35 @@ namespace Server.MySQL
             Success,
             NonexistentId,
             PasswordDoesNotMatch
+        }
+
+        public void InsertInventoryItem(int userUid, int itemId, int count)
+        {
+            string[] tableName = new string[3] { InventoryTable.userUid, InventoryTable.itemId, InventoryTable.count };
+            string[] tableValue = new string[3] { userUid.ToString(), itemId.ToString(), count.ToString() };
+            string insertCmd = MySQLUtility.GetInsertCmd(InventoryTable.table, tableName, tableValue);
+
+            try
+            {
+                MySQLUtility.ExcuteSQL(insertCmd, _sqlConnection);
+            }
+            catch (Exception ex)
+            {
+                ServerDebug.Log(LogType.Warning, ex.Message);
+            }
+        }
+
+        public void UpdateInventoryItem(int inventoryId, int count)
+        {
+            string updateCmd = $"UPDATE {InventoryTable.table} SET {InventoryTable.count} = {count} WHERE {InventoryTable.inventoryId} = {inventoryId};";
+            try
+            {
+                MySQLUtility.ExcuteSQL(updateCmd, _sqlConnection);
+            }
+            catch (Exception ex)
+            {
+                ServerDebug.Log(LogType.Warning, ex.Message);
+            }
         }
     }
 }

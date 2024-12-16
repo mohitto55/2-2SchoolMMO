@@ -86,7 +86,6 @@
     <Compile Include="Assets\Scripts\Utility\Excel\GoogleSheetsParser.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Factory\IFactory.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Map\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\Reference\ValueAsset.cs" />
@@ -112,6 +111,8 @@
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\SIngleton.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\ITransition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\LoginResponseHandler.cs" />
+    <Compile Include="Assets\Scripts\Runtime\UI\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Runtime\UI\InventoryView.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapEditor.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\StaticDataModule.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Entity.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\ChunkGenerator.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\Reference\ValueOnlyReference.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\Chunk.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Item\SOItem.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\ObjectManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Data\GoogleSheetTable.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapSerilizer.cs" />
