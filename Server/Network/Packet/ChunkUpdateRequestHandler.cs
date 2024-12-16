@@ -1,9 +1,9 @@
 ﻿using Server.Debug;
 using Server.Map;
 
-public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
+public class ChunkUpdateRequestHandler : PacketHandler<DtoChunkRequest>
 {
-    public MapTileRequestHandler(object data, EHandleType type) : base(data, type)
+    public ChunkUpdateRequestHandler(object data, EHandleType type) : base(data, type)
     {
     }
 
@@ -18,7 +18,8 @@ public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
         DtoVector position = data.position;
         float surroundDst = data.surroundDst;
 
-        List<DtoChunk> chunks = MapManager.GetSurroundChunks(mapName, position, surroundDst);
+        List<DtoTileChunk> chunks = MapManager.GetSurroundChunks<DtoTileChunk>(EMapObjectType.Tile, mapName, position, surroundDst);
+        
         foreach (var chunk in chunks)
         {
             if (chunk == null)
@@ -26,8 +27,7 @@ public class MapTileRequestHandler : PacketHandler<DtoChunkRequest>
                 ServerDebug.Log(LogType.Log, mapName);
                 continue;
             }
-
-            var handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.MapTileResponse);
+            var handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.ChunkUpdateResponse);
             handler.Init(chunk, m_id);
             IOCPServer.SendClient(m_id, handler);
         }

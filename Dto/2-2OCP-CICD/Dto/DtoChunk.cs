@@ -1,9 +1,8 @@
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
-public class DtoChunk : DtoBase
+public class DtoTileChunk : DtoChunk
 {
-    public DtoVector chunkID;
     [MarshalAs(UnmanagedType.I4)]
     public int tileCount;
     /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[System.Serializable]
 public abstract class Chunk<TKey>
 {
     public TKey Id;
@@ -12,6 +13,7 @@ public abstract class Chunk<TKey>
     public Chunk() { }
 }
 
+[System.Serializable]
 public abstract class MapChunk<TKey, TObject, TMap> : Chunk<TKey>
 {
     public TKey Id;
