@@ -33,8 +33,8 @@ public class TransformHandler : PacketHandler<DtoTransform>
         }
         else
         {
-            comps.vx = data.dtoVelocity.x / (float)Math.Sqrt((double)scala);
-            comps.vy = data.dtoVelocity.y / (float)Math.Sqrt((double)scala);
+            comps.vx = data.dtoVelocity.x / (float)Math.Sqrt((double)scala) * 5;
+            comps.vy = data.dtoVelocity.y / (float)Math.Sqrt((double)scala) * 5;
 
         }
 

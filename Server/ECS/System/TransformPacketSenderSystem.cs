@@ -20,7 +20,7 @@ public class TransformPacketSenderSystem : ComponentSystem
             {
                 sendTimer.elasedTime = 0;
 
-                ServerDebug.Log(LogType.Log, $"Transform Packet 전송 {position.x} , {position.y}");
+
 
                 IOCPServer.SendAllClient(EHandleType.Transform, new DtoTransform()
                 {

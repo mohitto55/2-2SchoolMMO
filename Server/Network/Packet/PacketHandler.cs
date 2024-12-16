@@ -96,7 +96,6 @@ public abstract class PacketHandler<T> : PacketHandler where T : DtoBase
         }
         else
         {
-            ServerDebug.Log(LogType.Log, data.ToString() + " OnSuccess");
             OnSuccess((T)m_data);
         }
 
