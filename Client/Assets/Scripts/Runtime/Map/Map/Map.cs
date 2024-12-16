@@ -1,22 +1,22 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class Map : MonoBehaviour
 {
-    public int MapXSize;
-    public int MapYSize;
-    Vector3 MapCenter;
-    Vector3 MapCorner;
-    [Range(0.2f, 1)]
-    public float NodeSize;
-    public Node[,] MapData;
+    //public int MapXSize;
+    //public int MapYSize;
+    //Vector3 MapCenter;
+    //Vector3 MapCorner;
+    //[Range(0.2f, 1)]
+    //public float NodeSize;
+    //public Node[,] MapData;
+    //
+    //int MapNodeXCount;
+    //int MapNodeYCount;
+    //
+    //Vector3 size;
+    //List<Node> cantWalkableNode = new List<Node>();
 
-    int MapNodeXCount;
-    int MapNodeYCount;
-    Vector3 size;
-    List<Node> cantWalkableNode = new List<Node>();
     //protected virtual void Awake()
     //{
     //    Vector2 MapSize = MapZone.GetSize();

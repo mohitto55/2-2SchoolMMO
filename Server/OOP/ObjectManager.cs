@@ -27,7 +27,8 @@ public static class ObjectManager
         var player = new Character(_world.Create(
             new PositionComponent(0,0),
             new VelocityComponent(0, 0),
-            new PacketSendTimer(0.1, 0)));
+            new PacketSendTimer(0.1, 0),
+            new BoundColliderComponent(1,1, false, new List<Entity>())));
         _gameObjects.Add(player.entity.Id, player);
         return player;
     }
