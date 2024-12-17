@@ -64,9 +64,11 @@
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\UIDialogBox.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\ICondition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\MapObjectChunk.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemUpdateRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\TransformHandler.cs" />
+    <Compile Include="Assets\Scripts\Runtime\DB\Model\InventorySlotModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\IModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\SOTileData.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\IAction.cs" />
@@ -88,11 +90,12 @@
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
-    <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Utility\Serialize\Reference\ValueAsset.cs" />
+    <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_Base.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\IState.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\IValueEnumable.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\FSM\IFSM.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemUpdateResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\PacketHandlerPoolManager.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileBaseExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\PlayerObjectIDResponseHandler.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="Assets\Scripts\Runtime\UI\InventoryView.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapEditor.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\StaticDataModule.cs" />
+    <Compile Include="Assets\Scripts\Runtime\DB\ViewModel\InventorySlotViewModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\State\State_Base.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\ISingleValue.cs" />

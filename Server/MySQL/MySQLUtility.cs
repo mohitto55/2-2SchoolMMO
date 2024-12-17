@@ -30,7 +30,7 @@ namespace Server.MySQL
                     {
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            data.Add(String.Format("{0}", reader[0]));
+                            data.Add(String.Format("{0}", reader[i]));
                         }
                     }
                 }

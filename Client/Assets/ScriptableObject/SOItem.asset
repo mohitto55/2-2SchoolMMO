@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemdatas:
   - sprite: {fileID: 7293598183456022363, guid: 1ddc9afd21fec77489b1248d18f31b68, type: 3}
-    id: 1
+    id: 100
     itemName: Apple
     itemDesc: "\uACF5\uBD80\uD558\uBA74\uC11C \uBA39\uB294 \uC0AC\uACFC\uB294 \uAD6D\uC601\uC218\uC0AC\uACFC"
   - sprite: {fileID: -711454075617216784, guid: 3d6be91968cb95546ac95aeff5e52f84, type: 3}
-    id: 2
+    id: 101
     itemName: Cherries
     itemDesc: "\uC815\uC2E0\uCCB4\uB9AC"
   - sprite: {fileID: 2344270669467322306, guid: ffc9f271fad56c243a45f100b9dc6778, type: 3}
-    id: 3
+    id: 102
     itemName: Orenge
     itemDesc: "\uC624\uB80C\uC9C0\uB97C \uC548\uBA39\uC740\uC9C0 \uC5BC\uB9C8\uB098
       \uC624\uB79C\uC9C0"

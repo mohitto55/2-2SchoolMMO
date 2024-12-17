@@ -12,4 +12,6 @@
     ObjectInfoResponse,
     ChunkUpdateRequest,
     ChunkUpdateResponse,
+    InventoryItemUpdateRequest,
+    InventoryItemUpdateResponse,
 }

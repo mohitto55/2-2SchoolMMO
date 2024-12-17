@@ -12,3 +12,4 @@ public record struct PacketSendTimer(double sendTime, double elasedTime);
 
 public record struct EntityTypeComponent(EEntityType type);
 
+public record struct NPCComponent(int npcId);

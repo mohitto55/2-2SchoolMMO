@@ -32,6 +32,17 @@ public static class ObjectManager
         _gameObjects.Add(player.entity.Id, player);
         return player;
     }
+
+    public static GameObject CreateNPC()
+    {
+        var npc = new Character(_world.Create(
+            new PositionComponent(0, 0),
+            new VelocityComponent(0, 0),
+            new PacketSendTimer(0.05, 0),
+            new BoundColliderComponent(1, 1, true, new List<Entity>())));
+        _gameObjects.Add(npc.entity.Id, npc);
+        return npc;
+    }
     public static void DestroyGameObject(int ID)
     {
         _world.Destroy(_gameObjects[ID].entity);

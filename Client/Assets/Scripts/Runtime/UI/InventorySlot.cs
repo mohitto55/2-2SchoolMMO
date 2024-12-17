@@ -1,3 +1,5 @@
+using Runtime.DB.Model;
+using Runtime.DB.ViewModel;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
@@ -16,7 +18,9 @@ public class InventorySlot : UIView
 
     protected override void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        ItemSlotData itemSlotData = (ItemSlotData)sender;
+        InventorySlotViewModel itemSlotViewModel = (InventorySlotViewModel)sender;
+        InventorySlotModel itemSlotData = itemSlotViewModel.slotItem;
+        Debug.Log("변경 감지" + itemSlotData.item.id + " " + itemSlotData.count + " " + " " + itemSlotData.item.itemDesc);
         if (itemSlotData.count == 0 || itemSlotData.item.sprite == null)
         {
             ClearSlot();
@@ -32,11 +36,5 @@ public class InventorySlot : UIView
         itemImage.sprite = null;
         itemImage.color = new Color(1, 1, 1, 0);
         itemCountText.text = "";
-    }
-
-    public struct ItemSlotData
-    {
-        public ItemData item;
-        public int count;
     }
 }

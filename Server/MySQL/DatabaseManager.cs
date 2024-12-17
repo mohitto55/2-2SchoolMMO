@@ -11,16 +11,20 @@ namespace Server.MySQL
         public struct UserTable
         {
             public const string table = "users";
+            public const string uid = "uid";
+            public const string id = "id";
         }
 
         public struct InventoryTable
         {
             public const string table = "inventory";
             public const string inventoryId = "inventory_id";
+            public const string inventorySlot = "inventory_slot";
             public const string userUid = "user_uid";
             public const string itemId = "item_id";
             public const string count = "count";
         }
+
         public static MySqlConnection _sqlConnection;
 
         public const string DatabaseName = "db";
@@ -110,6 +114,22 @@ namespace Server.MySQL
             return LoginResult.PasswordDoesNotMatch;
         }
 
+        public static string GetUidFromId(string userId)
+        {
+            if (!IsUserRegistered(userId))
+            {
+                return "";
+            }
+            string selectPasswordCmd = $"SELECT {UserTable.uid} FROM {UserTable.table} where {UserTable.id} = '{userId}';";
+            string[] data = MySQLUtility.ExcuteSQL(selectPasswordCmd, _sqlConnection);
+            if (data.Length > 0)
+            {
+                return data[0];
+            }
+            return "";
+        }
+
+
         public static string[] GetFieldNames(object data)
         {
             FieldInfo[] fieldInfos = data.GetType().GetFields();
@@ -166,10 +186,10 @@ namespace Server.MySQL
             PasswordDoesNotMatch
         }
 
-        public void InsertInventoryItem(int userUid, int itemId, int count)
+        public static void InsertInventoryItem(int userUid, int slot, int itemId, int count)
         {
-            string[] tableName = new string[3] { InventoryTable.userUid, InventoryTable.itemId, InventoryTable.count };
-            string[] tableValue = new string[3] { userUid.ToString(), itemId.ToString(), count.ToString() };
+            string[] tableName = new string[4] { InventoryTable.userUid, InventoryTable.inventorySlot, InventoryTable.itemId, InventoryTable.count };
+            string[] tableValue = new string[4] { userUid.ToString(), slot.ToString(), itemId.ToString(), count.ToString() };
             string insertCmd = MySQLUtility.GetInsertCmd(InventoryTable.table, tableName, tableValue);
 
             try
@@ -182,9 +202,9 @@ namespace Server.MySQL
             }
         }
 
-        public void UpdateInventoryItem(int inventoryId, int count)
+        public static void UpdateInventoryItem(string userUid, int slot, int count)
         {
-            string updateCmd = $"UPDATE {InventoryTable.table} SET {InventoryTable.count} = {count} WHERE {InventoryTable.inventoryId} = {inventoryId};";
+            string updateCmd = $"UPDATE {InventoryTable.table} SET {InventoryTable.count} = {count} WHERE {InventoryTable.inventorySlot} = '{slot}' AND {InventoryTable.userUid} = '{userUid}';";
             try
             {
                 MySQLUtility.ExcuteSQL(updateCmd, _sqlConnection);
@@ -193,6 +213,57 @@ namespace Server.MySQL
             {
                 ServerDebug.Log(LogType.Warning, ex.Message);
             }
+        }
+
+        public static DtoInventoryItem? GetInventoryItem(string userId, string slot)
+        {
+            ServerDebug.Log(LogType.Log, "유저 아이디 " + userId);
+            DtoInventoryItem? inventoryItem = null;
+            string userUid = GetUidFromId(userId);
+
+            if (userUid == "")
+            {
+                return null;
+            }
+
+            if (!HasInventoryItemInSlot(userUid, slot))
+            {
+                return null;
+            }
+            ServerDebug.Log(LogType.Log, "유저 U아이디 " + userUid);
+
+            string cmd = $"SELECT {InventoryTable.inventoryId}, {InventoryTable.itemId}, {InventoryTable.count} " +
+                $"FROM {InventoryTable.table} WHERE {InventoryTable.userUid} = '{userUid}' AND {InventoryTable.inventorySlot} = '{slot}';";
+            string[] data = MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
+
+            if (data.Length != 3)
+            {
+                return null;
+            }
+
+            string inventoryId = data[0];
+            string itemId = data[1];
+            string itemCount = data[2];
+
+            inventoryItem = new DtoInventoryItem();
+            inventoryItem.count = int.Parse(itemCount);
+            inventoryItem.itemId = int.Parse(itemId);
+            inventoryItem.inventoryId = int.Parse(inventoryId);
+            inventoryItem.inventorySlot = int.Parse(slot);
+            inventoryItem.userUid = int.Parse(userUid);
+            return inventoryItem;
+        }
+
+        public static bool HasInventoryItemInSlot(string userUid, string slot)
+        {
+            string cmd = $"SELECT {InventoryTable.userUid} FROM {InventoryTable.table} where {InventoryTable.userUid} = '{userUid}' AND {InventoryTable.inventorySlot} = '{slot}';";
+            string[] data = MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
+
+            if (data.Length > 0 && data[0] == userUid.ToString())
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

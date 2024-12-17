@@ -184,7 +184,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
     {
         if (stream == null) return;
         if (data == null) return;
-
+        
         var sendData = MergeData(handleType, data);
         stream.Write(sendData, 0, sendData.Length);
     }
