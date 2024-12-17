@@ -1,47 +1,23 @@
 using Arch.Core;
+using Arch.Core.Extensions;
+using Server.Debug;
 
 public class NPCSystem : ComponentSystem
 {
     public override void Tick(World world, double dt)
     {
         var contacts = new List<Entity>();
-        var query = new QueryDescription().WithAll<BoundColliderComponent, PositionComponent>();
+        var query = new QueryDescription().WithAll<BoundColliderComponent, PositionComponent, NPCComponent, EntityTypeComponent>();
 
         world.Query(in query, (Entity entityA,
          ref BoundColliderComponent boundA,
          ref PositionComponent positionA) =>
         {
-            var changePos = positionA;
-            var aMinX = positionA.x - (boundA.w / 2.0f);
-            var aMaxX = positionA.x + (boundA.w / 2.0f);
-            var aMinY = positionA.y - (boundA.h / 2.0f);
-            var aMaxY = positionA.y + (boundA.h / 2.0f);
+            if (boundA.contactsEntity.Count <= 0)
+                return;
 
-            world.Query(in query, (Entity entityB,
-            ref BoundColliderComponent boundB,
-            ref PositionComponent positionB) =>
-            {
-                var bMinX = positionB.x - (boundB.w / 2.0f);
-                var bMaxX = positionB.x + (boundB.w / 2.0f);
-                var bMinY = positionB.y - (boundB.h / 2.0f);
-                var bMaxY = positionB.y + (boundB.h / 2.0f);
-
-                if (IsCollision(aMinX, aMinY, aMaxX, aMaxY, bMinX, bMinY, bMaxX, bMaxY))
-                {
-                    if (entityA != entityB)
-                    {
-                        contacts.Add(entityB);
-                        changePos.x -= (positionB.x - changePos.x);
-                        changePos.y -= (positionB.y - changePos.y);
-                    }
-                }
-
-            });
-            if (contacts.Count > 0)
-            {
-                boundA.contactsEntity = contacts;
-                positionA = changePos;
-            }
+            for (int i = 0; i < boundA.contactsEntity.Count; i++)
+                ServerDebug.Log(LogType.Log, "콘택트 " + boundA.contactsEntity[i].Id.ToString());
         });
     }
     // 충돌 감지 메서드

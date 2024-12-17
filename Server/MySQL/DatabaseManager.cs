@@ -215,10 +215,8 @@ namespace Server.MySQL
             }
         }
 
-        public static DtoInventoryItem? GetInventoryItem(string userId, string slot)
+        public static DtoInventoryItemData? GetInventoryItems(string userId)
         {
-            ServerDebug.Log(LogType.Log, "유저 아이디 " + userId);
-            DtoInventoryItem? inventoryItem = null;
             string userUid = GetUidFromId(userId);
 
             if (userUid == "")
@@ -226,32 +224,30 @@ namespace Server.MySQL
                 return null;
             }
 
-            if (!HasInventoryItemInSlot(userUid, slot))
+            string cmd = $"SELECT {InventoryTable.inventoryId}, {InventoryTable.itemId}, {InventoryTable.count}, {InventoryTable.inventorySlot} " +
+                $"FROM {InventoryTable.table} WHERE {InventoryTable.userUid} = '{userUid}';";
+            string[][] data = MySQLUtility.GetSQLColumn(cmd, _sqlConnection);
+
+            DtoInventoryItemData inventoryItemData = new DtoInventoryItemData();
+            int slotCount = data.Length;
+            inventoryItemData.slotItems = new DtoInventoryItem[100];
+            for(int i = 0; i < data.Length; i++)
             {
-                return null;
+                string[] slotDataColumn = data[i];
+                if (slotDataColumn.Length <= 0)
+                    continue;
+
+                inventoryItemData.slotCount++;
+                DtoInventoryItem item = new DtoInventoryItem();
+                item.inventoryId = int.Parse(slotDataColumn[0]);
+                item.itemId = int.Parse(slotDataColumn[1]);
+                item.count = int.Parse(slotDataColumn[2]);
+                item.inventorySlot = int.Parse(slotDataColumn[3]);
+                inventoryItemData.slotItems[i] = item;
+
             }
-            ServerDebug.Log(LogType.Log, "유저 U아이디 " + userUid);
 
-            string cmd = $"SELECT {InventoryTable.inventoryId}, {InventoryTable.itemId}, {InventoryTable.count} " +
-                $"FROM {InventoryTable.table} WHERE {InventoryTable.userUid} = '{userUid}' AND {InventoryTable.inventorySlot} = '{slot}';";
-            string[] data = MySQLUtility.ExcuteSQL(cmd, _sqlConnection);
-
-            if (data.Length != 3)
-            {
-                return null;
-            }
-
-            string inventoryId = data[0];
-            string itemId = data[1];
-            string itemCount = data[2];
-
-            inventoryItem = new DtoInventoryItem();
-            inventoryItem.count = int.Parse(itemCount);
-            inventoryItem.itemId = int.Parse(itemId);
-            inventoryItem.inventoryId = int.Parse(inventoryId);
-            inventoryItem.inventorySlot = int.Parse(slot);
-            inventoryItem.userUid = int.Parse(userUid);
-            return inventoryItem;
+            return inventoryItemData;
         }
 
         public static bool HasInventoryItemInSlot(string userUid, string slot)

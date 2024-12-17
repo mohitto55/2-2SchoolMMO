@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\UIDialogBox.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\ICondition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\MapObjectChunk.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemUpdateRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\TransformHandler.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Assets\Scripts\Runtime\Entity\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Utility\Excel\GoogleSheetsParser.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Factory\IFactory.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemDataRequestHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialogueRunner.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\TileMapSerializer.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\EntityModel.cs" />
@@ -95,13 +95,14 @@
     <Compile Include="Assets\Scripts\Runtime\State\State\IState.cs" />
     <Compile Include="Assets\Scripts\Utility\Sub\IValueEnumable.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\FSM\IFSM.cs" />
-    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemUpdateResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\PacketHandlerPoolManager.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TileBaseExporter.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\PlayerObjectIDResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\DialoguePrinterHelper.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Configuration.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\InventoryItemDataResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Utility\DesignPattern\MVVM.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\ObjectInfoResponseHandler.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\TileMapChunk.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\Transition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Exporter\TilePositionExporter.cs" />

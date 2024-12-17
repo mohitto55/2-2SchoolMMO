@@ -1,4 +1,5 @@
 using Runtime.BT.Singleton;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoSingleton<PlayerController>
@@ -11,9 +12,11 @@ public class PlayerController : MonoSingleton<PlayerController>
     [SerializeField]
     Vector2 _axis;
 
+    public Action<Character> OnSetTarget;
     public void SetTarget(Character target)
     {
         _target = target;
+        OnSetTarget(target);
     }
 
     private void Update()

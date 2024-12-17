@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class InventoryItemUpdateRequestHandler : PacketHandler<DtoMessage>
+public class InventoryItemDataRequestHandler : PacketHandler<DtoMessage>
 {
-    public InventoryItemUpdateRequestHandler(object data, EHandleType type) : base(data, type)
+    public InventoryItemDataRequestHandler(object data, EHandleType type) : base(data, type)
     {
 
     }

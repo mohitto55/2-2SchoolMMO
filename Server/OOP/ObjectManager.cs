@@ -35,7 +35,7 @@ public static class ObjectManager
 
     public static GameObject CreateNPC()
     {
-        var npc = new Character(_world.Create(
+        var npc = new NPC(_world.Create(
             new PositionComponent(0, 0),
             new VelocityComponent(0, 0),
             new PacketSendTimer(0.05, 0),

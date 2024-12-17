@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class InventoryView : UIView
@@ -40,20 +39,19 @@ public class InventoryView : UIView
         }
     }
 
-    private void Start()
+    public void OnEnable()
     {
-        StartCoroutine(SlotUpdate());
+        PlayerController.Instance.OnSetTarget += InventoryUpdate;
     }
 
-    IEnumerator SlotUpdate()
+    private void OnDisable()
     {
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            yield return new WaitForSeconds(0.3f);
-            DtoMessage itemSlotId = new DtoMessage();
-            itemSlotId.message = i.ToString();
-            NetworkManager.Instance.SendPacket(EHandleType.InventoryItemUpdateRequest, itemSlotId);
-        }
+        PlayerController.Instance.OnSetTarget -= InventoryUpdate;
+    }
+
+    public void InventoryUpdate(Character character)
+    {
+        NetworkManager.Instance.SendPacket(EHandleType.InventoryItemDataRequest, new DtoMessage());
     }
 
     public void SetInventorySlotModel(int slotIndex, DtoInventoryItem dtoItem)
