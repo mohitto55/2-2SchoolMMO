@@ -77,7 +77,6 @@ public class LoginView : UIView
         {
             case "Success":
                 _messageText.text = "Login Success!";
-                SceneManager.LoadScene("MainMap");
                 break;
             case "NonexistentId":
                 _messageText.text = "It's a non existent ID";

@@ -7,8 +7,6 @@ public class PlayerController : MonoSingleton<PlayerController>
     [SerializeField]
     Character _target;
 
-    public Character target => _target;
-
     [SerializeField]
     Vector2 _fixedAxis;
     [SerializeField]
@@ -35,8 +33,6 @@ public class PlayerController : MonoSingleton<PlayerController>
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-
-            Debug.Log("น฿ป็");
             NetworkManager.Instance.SendPacket(EHandleType.PlayerInteraction, new DtoMessage());
         }
     }

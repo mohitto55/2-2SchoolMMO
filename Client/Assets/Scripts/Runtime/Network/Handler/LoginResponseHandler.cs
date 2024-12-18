@@ -14,11 +14,11 @@ public class LoginResponseHandler : PacketHandler<DtoMessage>
 
     protected override void OnSuccess(DtoMessage data)
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // SceneManager.sceneLoaded += OnSceneLoaded;
         if (!NetworkManager.Instance.AutoLoginTry)
             SceneManager.LoadScene("InGameScene");
 
-        
+        NetworkManager.Instance.SendPacket(EHandleType.PlayerObjectIDRequest, new DtoObjectInfo());
     }
 
     protected void OnSceneLoaded(Scene scene, LoadSceneMode mode)

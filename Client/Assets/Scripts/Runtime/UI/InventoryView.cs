@@ -54,6 +54,7 @@ public class InventoryView : UIView
 
     public void InventoryUpdate(Character character)
     {
+        Debug.Log("메세지지지");
         NetworkManager.Instance.SendPacket(EHandleType.InventoryItemDataRequest, new DtoMessage());
     }
 

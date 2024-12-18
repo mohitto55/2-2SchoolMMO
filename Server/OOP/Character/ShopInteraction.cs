@@ -23,7 +23,6 @@ public class ShopInteraction : NPCInteraction
             var handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.ShopItemResponse);
             handler.Init(shopData, playerID);
             IOCPServer.SendClient(playerID, handler);
-            ServerDebug.Log(LogType.Log, npcUID + " 잘가시지 PlayerID : " + playerID);
         }
     }
 }
