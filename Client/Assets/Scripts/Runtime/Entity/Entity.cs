@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private string _objectId;
-    public string ObjectId => _objectId;
+    [SerializeField] private int _objectId;
+    [SerializeField] private EEntityType _entityType;
+    public int ObjectId => _objectId;
+    public EEntityType EntityType => _entityType;
+
     private int index;
     
     protected virtual void Awake()

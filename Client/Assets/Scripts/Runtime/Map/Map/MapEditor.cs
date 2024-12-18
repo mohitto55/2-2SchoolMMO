@@ -29,57 +29,6 @@ public class MapEditor : SerializedMonoBehaviour
     }
 }
 
-[System.Serializable]
-public abstract class MapSerilizer : ISerializer<string>
-{
-    public abstract void Serialize(string mapName);
-}
-
-[System.Serializable]
-public class MapObjectSerilizer : MapSerilizer
-{
-    [SerializeField] Transform _objectsParent;
-    public override void Serialize(string mapName)
-    {
-        Debug.Log(PathHelper.GetPojectParentFolder());
-        Entity[] entities = _objectsParent.GetComponentsInChildren<Entity>();
-
-        List<DtoEntityObject> list = new List<DtoEntityObject>();
-        foreach (Entity entity in entities)
-        {
-            list.Add(new DtoEntityObject()
-            {
-                entityType = entity.ObjectId,
-                position = entity.transform.position.ToDtoVector()
-            });
-        }
-
-        string folderPath = PathHelper.GetPojectParentFolder() + '/' + "Server/Data/" + mapName;
-        ObjectSerilizer.Serailize(list, folderPath, EMapObjectType.EntityObject.ToString() + ".json");
-
-        folderPath = PathHelper.GetFolderPath("Json");
-        ObjectSerilizer.Serailize(list, folderPath, EMapObjectType.EntityObject.ToString() + ".json");
-    }
-}
-[System.Serializable]
-public class MapTileSerilizer : MapSerilizer
-{
-    [SerializeField] Tilemap _tileMap;
-    [SerializeField] SOTileData _soTileData;
-    public override void Serialize(string mapName)
-    {
-        Debug.Log(PathHelper.GetPojectParentFolder());
-        List<TileBaseExporter> exporters = new List<TileBaseExporter>();
-        exporters.Add(new TilePositionExporter());
-
-        Dictionary<string, TileData> tileDataDic = _soTileData.GetTileTable();
-        string folderPath = PathHelper.GetPojectParentFolder() + '/' + "Server/Data/" + mapName;
-        TileMapSerializer.TileMapSerailize(_tileMap, tileDataDic, folderPath, EMapObjectType.Tile.ToString() + ".json");
-
-        folderPath = PathHelper.GetFolderPath("Json");
-        TileMapSerializer.TileMapSerailize(_tileMap, tileDataDic, folderPath, EMapObjectType.Tile.ToString() + "Tile.json");
-    }
-}
 public static class VectorExtensions
 {
     public static DtoVector ToDtoVector(this Vector3 vector)

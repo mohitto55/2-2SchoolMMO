@@ -155,11 +155,6 @@ namespace Server.MySQL
             return datas;
         }
 
-        //public static string[] GetUserData(string userId)
-        //{
-
-        //}
-
         /// <summary>
         /// 유저 이름이 생성될 수 있는 이름인지 확인하는 임시 함수
         /// 나중에 정규 표현식으로 확장가능
@@ -215,7 +210,7 @@ namespace Server.MySQL
             }
         }
 
-        public static DtoInventoryItemData? GetInventoryItems(string userId)
+        public static DtoItemSlotData? GetInventoryItems(string userId)
         {
             string userUid = GetUidFromId(userId);
 
@@ -224,13 +219,13 @@ namespace Server.MySQL
                 return null;
             }
 
-            string cmd = $"SELECT {InventoryTable.inventoryId}, {InventoryTable.itemId}, {InventoryTable.count}, {InventoryTable.inventorySlot} " +
+            string cmd = $"SELECT {InventoryTable.inventoryId}, {InventoryTable.inventorySlot}, {InventoryTable.itemId}, {InventoryTable.count} " +
                 $"FROM {InventoryTable.table} WHERE {InventoryTable.userUid} = '{userUid}';";
             string[][] data = MySQLUtility.GetSQLColumn(cmd, _sqlConnection);
 
-            DtoInventoryItemData inventoryItemData = new DtoInventoryItemData();
+            DtoItemSlotData inventoryItemData = new DtoItemSlotData();
             int slotCount = data.Length;
-            inventoryItemData.slotItems = new DtoInventoryItem[100];
+            inventoryItemData.slotItems = new DtoItemSlot[50];
             for(int i = 0; i < data.Length; i++)
             {
                 string[] slotDataColumn = data[i];
@@ -238,12 +233,16 @@ namespace Server.MySQL
                     continue;
 
                 inventoryItemData.slotCount++;
-                DtoInventoryItem item = new DtoInventoryItem();
-                item.inventoryId = int.Parse(slotDataColumn[0]);
-                item.itemId = int.Parse(slotDataColumn[1]);
-                item.count = int.Parse(slotDataColumn[2]);
-                item.inventorySlot = int.Parse(slotDataColumn[3]);
-                inventoryItemData.slotItems[i] = item;
+                DtoItemSlot inventoryItem = new DtoItemSlot();
+                DtoItem item = new DtoItem();
+                //inventoryItem.inventoryId = int.Parse(slotDataColumn[0]);
+                inventoryItem.slotIndex = int.Parse(slotDataColumn[1]);
+
+                item.itemId = int.Parse(slotDataColumn[2]);
+                item.count = int.Parse(slotDataColumn[3]);
+
+                inventoryItem.item = item;
+                inventoryItemData.slotItems[i] = inventoryItem;
 
             }
 

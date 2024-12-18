@@ -1,0 +1,16 @@
+[
+  {
+    "entityType": "Npc",
+    "position": {
+      "x": -6.64,
+      "y": 3.94,
+      "z": -10.0,
+      "w": 0.0,
+      "errorCode": 0,
+      "errorMessage": null
+    },
+    "entityID": 1002,
+    "errorCode": 0,
+    "errorMessage": null
+  }
+]

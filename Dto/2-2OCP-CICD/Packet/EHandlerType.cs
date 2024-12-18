@@ -14,4 +14,6 @@
     ChunkUpdateResponse,
     InventoryItemDataRequest,
     InventoryItemDataResponse,
+    PlayerInteraction,
+    ShopItemResponse,
 }

@@ -28,18 +28,20 @@ public static class ObjectManager
             new PositionComponent(0,0),
             new VelocityComponent(0, 0),
             new PacketSendTimer(0.05, 0),
-            new BoundColliderComponent(1,1, false, new List<Entity>())));
+            new BoundColliderComponent(1,1, false, new List<Entity>()),
+            new InteractionComponent(EEntityType.Player, 0.ToString(), false, true, 0.1f)));
         _gameObjects.Add(player.entity.Id, player);
         return player;
     }
 
-    public static GameObject CreateNPC()
+    public static GameObject CreateNPC(DtoVector position, int npcUid)
     {
         var npc = new NPC(_world.Create(
-            new PositionComponent(0, 0),
+            new PositionComponent(position.x, position.y),
             new VelocityComponent(0, 0),
             new PacketSendTimer(0.05, 0),
-            new BoundColliderComponent(1, 1, true, new List<Entity>())));
+            new BoundColliderComponent(1, 1, true, new List<Entity>()),
+            new InteractionComponent(EEntityType.Npc, npcUid.ToString())));
         _gameObjects.Add(npc.entity.Id, npc);
         return npc;
     }
@@ -49,6 +51,12 @@ public static class ObjectManager
         _gameObjects.Remove(ID);
     }
 
+    public static GameObject GetGameObject(int ID)
+    {
+        if (_gameObjects.ContainsKey(ID))
+            return _gameObjects[ID];
+        return null;
+    }
 
 
 

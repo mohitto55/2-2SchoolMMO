@@ -16,6 +16,9 @@ namespace Server.Debug
     {
         public static Action<string> LogEvent;
         public static void Log(LogType type, string message) {
+            if (message == null)
+                return;
+
             string typeStr = "[" + type.ToString() + "]";
             message = message.Insert(0, typeStr);
             if (LogEvent != null) LogEvent(message);

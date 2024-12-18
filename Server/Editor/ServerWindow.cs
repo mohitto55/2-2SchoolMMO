@@ -25,16 +25,24 @@ namespace Server
 
             ServerDebug.LogEvent += AddItemBoxText;
 
-            MapManager.Init();
-
             ObjectManager.Init();
 
+            MapManager.Init();
 
             PacketHandlerPoolManager.Init();
 
             DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.Init();
 
+            Task.Run(async () =>
+            {
+                string sheetUrl = "https://docs.google.com/spreadsheets/d/1zWXn4LBF9tVX2tjykCvsS9HI3OEpap6lFqhPEKxc-zg";
+                await ItemDataManager.InitAsync(sheetUrl, "0");
+
+                await ShopDataManager.InitAsync(sheetUrl, "1666531940");
+
+                await NPCManager.InitAsync(sheetUrl, "41718995");
+            });
             IOCPServer server = new IOCPServer(4826);
             server.Init();
             Task.Run(() => {

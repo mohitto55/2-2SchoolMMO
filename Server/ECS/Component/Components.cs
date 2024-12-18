@@ -12,4 +12,4 @@ public record struct PacketSendTimer(double sendTime, double elasedTime);
 
 public record struct EntityTypeComponent(EEntityType type);
 
-public record struct NPCComponent(int npcId);
+public record struct InteractionComponent(EEntityType type, string actionID, bool canAction = true, bool useDisableTimer = false, double disableTimer = 0.05f, double lastDisableTimer = 0);

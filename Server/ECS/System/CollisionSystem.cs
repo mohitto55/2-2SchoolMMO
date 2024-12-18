@@ -18,6 +18,7 @@ public class CollisionSystem : ComponentSystem
             var aMaxX = positionA.x + (boundA.w / 2.0f);
             var aMinY = positionA.y - (boundA.h / 2.0f);
             var aMaxY = positionA.y + (boundA.h / 2.0f);
+            var isTriggerBoundB = false;
 
             world.Query(in query, (Entity entityB,
             ref BoundColliderComponent boundB,
@@ -27,8 +28,8 @@ public class CollisionSystem : ComponentSystem
                 var bMaxX = positionB.x + (boundB.w / 2.0f);
                 var bMinY = positionB.y - (boundB.h / 2.0f);
                 var bMaxY = positionB.y + (boundB.h / 2.0f);
-
-                if(IsCollision(aMinX, aMinY, aMaxX, aMaxY, bMinX, bMinY, bMaxX, bMaxY))
+                isTriggerBoundB = boundB.isTrigger;
+                if (IsCollision(aMinX, aMinY, aMaxX, aMaxY, bMinX, bMinY, bMaxX, bMaxY))
                 {
                     if (entityA != entityB)
                     {
@@ -44,7 +45,8 @@ public class CollisionSystem : ComponentSystem
             if(contacts.Count > 0)
             {
                 boundA.contactsEntity = contacts;
-                positionA = changePos;
+                if (!boundA.isTrigger && !isTriggerBoundB)
+                    positionA = changePos;
             }
         });
     }

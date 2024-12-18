@@ -1,18 +1,19 @@
 ﻿using System.Linq;
 
-public class InventoryItemDataResponseHandler : PacketHandler<DtoInventoryItemData>
+public class InventoryItemDataResponseHandler : PacketHandler<DtoItemSlotData>
 {
     public InventoryItemDataResponseHandler(object data, EHandleType type) : base(data, type)
     {
 
     }
 
-    protected override void OnFailed(DtoInventoryItemData data)
+    protected override void OnFailed(DtoItemSlotData data)
     {
 
     }
 
-    protected override void OnSuccess(DtoInventoryItemData data)
+    protected override void OnSuccess(DtoItemSlotData data)
     {
+
     }
 }

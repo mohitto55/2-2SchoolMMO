@@ -16,7 +16,8 @@ public class PlayerController : MonoSingleton<PlayerController>
     public void SetTarget(Character target)
     {
         _target = target;
-        OnSetTarget(target);
+        if (OnSetTarget != null)
+            OnSetTarget.Invoke(target);
     }
 
     private void Update()
@@ -30,7 +31,12 @@ public class PlayerController : MonoSingleton<PlayerController>
         _axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized * 5;
 
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
 
+            Debug.Log("น฿ป็");
+            NetworkManager.Instance.SendPacket(EHandleType.PlayerInteraction, new DtoMessage());
+        }
     }
     private void FixedUpdate()
     {

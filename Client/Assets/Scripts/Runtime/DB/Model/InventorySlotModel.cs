@@ -1,9 +1,12 @@
+using UnityEngine;
+
 namespace Runtime.DB.Model
 {
     [System.Serializable]
     public class InventorySlotModel : IModel
     {
-        public ItemData item;
+        public Sprite sprite;
+        public DtoItem item;
         public int count;
     }
 }
