@@ -35,7 +35,7 @@ public class MoveSystem : ComponentSystem
                     {
                         if (!boundB.isTrigger)
                         {
-                            ServerDebug.Log(LogType.Log, $"객체 충돌 {entity.Id} , {entityB.Id}");
+                            //ServerDebug.Log(LogType.Log, $"객체 충돌 {entity.Id} , {entityB.Id}");
                             trigger = true;
                             return;
                         }

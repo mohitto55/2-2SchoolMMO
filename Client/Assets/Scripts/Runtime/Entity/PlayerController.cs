@@ -7,6 +7,8 @@ public class PlayerController : MonoSingleton<PlayerController>
     [SerializeField]
     Character _target;
 
+    public Character target => _target;
+
     [SerializeField]
     Vector2 _fixedAxis;
     [SerializeField]

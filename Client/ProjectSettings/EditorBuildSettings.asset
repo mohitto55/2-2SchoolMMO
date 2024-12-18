@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMap.unity
+    guid: 8aba15e701a55b8479972f241d0bfcb6
+  - enabled: 1
     path: Assets/Scenes/InGameScene.unity
     guid: f3d76fcdc47d230488f6bb05b1755a04
-  - enabled: 1
-    path: Assets/Scenes/MapGenerateScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/LoginScene.unity
     guid: 6766897f6f0e97d44bb858215ff01230
   - enabled: 1
-    path: Assets/Scenes/MainMap.unity
-    guid: 8aba15e701a55b8479972f241d0bfcb6
+    path: Assets/Scenes/MapGenerateScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -181,7 +181,7 @@ namespace Server.MySQL
             PasswordDoesNotMatch
         }
 
-        public static void InsertInventoryItem(int userUid, int slot, int itemId, int count)
+        public static void InsertItemToSlot(string userUid, int slot, int itemId, int count)
         {
             string[] tableName = new string[4] { InventoryTable.userUid, InventoryTable.inventorySlot, InventoryTable.itemId, InventoryTable.count };
             string[] tableValue = new string[4] { userUid.ToString(), slot.ToString(), itemId.ToString(), count.ToString() };
@@ -197,7 +197,7 @@ namespace Server.MySQL
             }
         }
 
-        public static void UpdateInventoryItem(string userUid, int slot, int count)
+        public static void UpdateInventoryItemCount(string userUid, int slot, int count)
         {
             string updateCmd = $"UPDATE {InventoryTable.table} SET {InventoryTable.count} = {count} WHERE {InventoryTable.inventorySlot} = '{slot}' AND {InventoryTable.userUid} = '{userUid}';";
             try
@@ -210,10 +210,8 @@ namespace Server.MySQL
             }
         }
 
-        public static DtoItemSlotData? GetInventoryItems(string userId)
+        public static DtoItemSlotData? GetInventoryItems(string userUid)
         {
-            string userUid = GetUidFromId(userId);
-
             if (userUid == "")
             {
                 return null;
@@ -259,6 +257,89 @@ namespace Server.MySQL
                 return true;
             }
             return false;
+        }
+
+        public static void InsertItemToInventory(string userUid, DtoItem item)
+        {
+            if (!ItemDataManager.IsCorrectItemData(item.itemId))
+                return;
+
+            try
+            {
+                // 1. 중첩 가능한 슬롯이 있는지 확인
+                string selectCmd = $"SELECT {InventoryTable.inventorySlot}, {InventoryTable.count} " +
+                                   $"FROM {InventoryTable.table} " +
+                                   $"WHERE {InventoryTable.userUid} = '{userUid}' AND {InventoryTable.itemId} = '{item.itemId}';";
+
+                string[][] answer = MySQLUtility.GetSQLColumn(selectCmd, _sqlConnection);
+                int lastCount = item.count;
+                foreach (string[] row in answer)
+                {
+                    string slot = row[0];
+                    int count = int.Parse(row[1]);
+                    if (count < item.maxCount)
+                    {
+                        int insertCount = Math.Min(item.maxCount - count, lastCount);
+                        lastCount -= insertCount;
+                        UpdateInventoryItemCount(userUid, int.Parse(slot), count + insertCount);
+                        ServerDebug.Log(LogType.Log, $"{userUid}의 {slot}번쨰 슬롯 아이템 개수 {insertCount}로 변경");
+                    }
+                    if(lastCount <= 0)
+                    {
+                        return;
+                    }
+                }
+
+                // 2. 비어있는 슬롯 찾기
+                List<int> usedSlots = new List<int>();
+                string usedSlotsCmd = $"SELECT {InventoryTable.inventorySlot} " +
+                                      $"FROM {InventoryTable.table} " +
+                                      $"WHERE {InventoryTable.userUid} = '{userUid}';";
+
+                string[][] usedSlotsResult = MySQLUtility.GetSQLColumn(usedSlotsCmd, _sqlConnection);
+
+                foreach (string[] row in usedSlotsResult)
+                {
+                    usedSlots.Add(int.Parse(row[0]));
+                }
+
+                int emptySlot = -1;
+                for (int i = 0; i < 20; i++) // 0 ~ 19까지 슬롯 확인
+                {
+                    if (!usedSlots.Contains(i))
+                    {
+                        emptySlot = i;
+                        break;
+                    }
+                }
+
+                // 3. 빈 슬롯에 아이템 삽입
+                if (emptySlot != -1)
+                {
+                    InsertItemToSlot(userUid, emptySlot, item.itemId, lastCount);
+                    ServerDebug.Log(LogType.Log, $"아이템 새 슬롯에 추가! 슬롯 번호: {emptySlot}");
+                }
+                else
+                {
+                    ServerDebug.Log(LogType.Warning, "인벤토리에 빈 슬롯이 없습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                ServerDebug.Log(LogType.Warning, ex.Message);
+            }
+        }
+
+            public static void SendInventoryUpdatePacket(string userUid, string clientId)
+        {
+            DtoItemSlotData inventoryData = DatabaseManager.GetInventoryItems(userUid);
+            if (inventoryData != null)
+            {
+                PacketHandler handler = PacketHandlerPoolManager.GetPacketHandler(EHandleType.InventoryItemDataResponse);
+                handler.Init(inventoryData, clientId);
+                IOCPServer.SendClient(clientId, handler);
+                ServerDebug.Log(LogType.Log, "아이템 보내기." + inventoryData.slotCount);
+            }
         }
     }
 }

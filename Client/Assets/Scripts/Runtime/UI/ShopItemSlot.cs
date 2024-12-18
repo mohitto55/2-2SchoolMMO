@@ -16,11 +16,21 @@ public class ShopItemSlot : ItemSlot
         base.OnViewModelPropertyChanged(sender, e);
     }
 
-    public override void SlotUpdate(InventorySlotModel itemSlotData)
+    public override void SlotUpdate(ItemSlotModel itemSlotData)
     {
         base.SlotUpdate(itemSlotData);
         _itemNameText.text = itemSlotData.item.name;
         _itemDescText.text = itemSlotData.item.desc;
         _itemCostText.text = "Cost : " + itemSlotData.item.cost.ToString();
+    }
+
+    public void BuyItem()
+    {
+        if (_itemSlotData != null)
+        {
+            DtoItemData itemData = new DtoItemData();
+            itemData.item = _itemSlotData.item;
+            NetworkManager.Instance.SendPacket(EHandleType.BuyItem, itemData);
+        }
     }
 }

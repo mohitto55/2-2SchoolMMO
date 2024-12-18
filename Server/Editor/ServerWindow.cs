@@ -42,6 +42,8 @@ namespace Server
                 await ShopDataManager.InitAsync(sheetUrl, "1666531940");
 
                 await NPCManager.InitAsync(sheetUrl, "41718995");
+
+                ServerDebug.Log(LogType.Log, "DB 초기화 완료");
             });
             IOCPServer server = new IOCPServer(4826);
             server.Init();

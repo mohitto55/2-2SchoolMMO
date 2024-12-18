@@ -14,6 +14,8 @@ namespace Server.MySQL
         private static Dictionary<EInteractionType, NPCInteraction> interactionTable = new Dictionary<EInteractionType, NPCInteraction>();
         public static async Task InitAsync(string url, string gid)
         {
+            NPCInteractionInit();
+
             GoogleSheetLoader loader = new GoogleSheetLoader();
             loader.Initialize();
             loader.AddGuid<DtoNPC>(gid);
@@ -24,7 +26,7 @@ namespace Server.MySQL
             while (await data.MoveNextAsync())
             {
                 var current = data.Current;
-                if (current.npcUID != "")
+                if (current.npcUID != null)
                 {
                     if (!npcTable.ContainsKey(current.npcUID))
                     {
@@ -32,7 +34,6 @@ namespace Server.MySQL
                     }
                 }
             }
-            NPCInteractionInit();
         }
 
         private static void NPCInteractionInit()

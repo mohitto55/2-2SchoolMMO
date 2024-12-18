@@ -66,8 +66,8 @@
     <Compile Include="Assets\Scripts\Runtime\Map\Chunk\MapObjectChunk.cs" />
     <Compile Include="Assets\Scripts\Utility\DialgoueSystem\Timeline\DialogueReact.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Condition\Condition_IsAir.cs" />
+    <Compile Include="Assets\Scripts\Runtime\Network\Handler\ChunkUpdateRequestHandler - 복사본.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\TransformHandler.cs" />
-    <Compile Include="Assets\Scripts\Runtime\DB\Model\InventorySlotModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\Model\IModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\SOTileData.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Action\IAction.cs" />
@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Utility\DesignPattern\Singleton\SIngleton.cs" />
     <Compile Include="Assets\Scripts\Runtime\State\Transition\ITransition.cs" />
     <Compile Include="Assets\Scripts\Runtime\Network\Handler\LoginResponseHandler.cs" />
+    <Compile Include="Assets\Scripts\Runtime\DB\Model\ItemSlotModel.cs" />
     <Compile Include="Assets\Scripts\Runtime\UI\InventoryView.cs" />
     <Compile Include="Assets\Scripts\Runtime\Map\Map\MapEditor.cs" />
     <Compile Include="Assets\Scripts\Runtime\DB\StaticDataModule.cs" />

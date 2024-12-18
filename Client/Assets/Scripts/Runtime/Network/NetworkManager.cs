@@ -46,7 +46,7 @@ public class NetworkManager : MonoSingleton<NetworkManager>
 
 
 
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this.gameObject);
         PacketHandlerPoolManager.Init();
 
         _responseCallback = new Dictionary<EHandleType, Queue<Action<object>>>();

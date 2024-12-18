@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System;
 using System.Diagnostics;
 using System.Security.Principal;
+using UnityEngine.SceneManagement;
 
 
 public class LoginView : UIView
@@ -21,29 +22,6 @@ public class LoginView : UIView
     [SerializeField] private TextMeshProUGUI _messageText;
 
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("메시지 보내기");
-            //DtoAccount loginAccount = new DtoAccount("", "jjs", "20242");
-            //NetworkManager.Instance.RegisterResponseCallback(EHandleType.LoginResponse, LoginCallback);
-            //NetworkManager.Instance.SendPacket(EHandleType.LoginRequest, loginAccount);
-
-            //DtoAccount registerAccount = new DtoAccount("Mohitto", "jjs", "2024");
-            //NetworkManager.Instance.RegisterResponseCallback(EHandleType.RegisterResponse, RegisterCallback);
-            //NetworkManager.Instance.SendPacket(EHandleType.RegisterRequest, registerAccount);
-            //DtoUserCharacterData userCharacterData = new DtoUserCharacterData();
-            ////userCharacterData.characters = new DtoCharacter[2];
-            ////userCharacterData.characters = new DtoCharacter();
-            ////userCharacterData.characters.name = "테스트이름1";
-            ////userCharacterData.characters[1] = new DtoCharacter();
-            ////userCharacterData.characters[1].name = "테스트이름2";
-
-            //NetworkManager.Instance.SendPacket(EHandleType.CharacterRequest, userCharacterData);
-        }
-    }
     public void TryLogin()
     {
         string idString = _loginIdField.text;
@@ -98,7 +76,8 @@ public class LoginView : UIView
         switch (message.message)
         {
             case "Success":
-                _messageText.text = "Register Success!";
+                _messageText.text = "Login Success!";
+                SceneManager.LoadScene("MainMap");
                 break;
             case "NonexistentId":
                 _messageText.text = "It's a non existent ID";

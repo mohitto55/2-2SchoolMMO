@@ -28,6 +28,9 @@ public class ObjectManager : MonoSingleton<ObjectManager>
     }
     public void SetTransformEntityData(int id, DtoTransform data)
     {
+        if (PlayerController.Instance.target == null)
+            return;
+
         if (characters.ContainsKey(id))
         {
             characters[id].SetTransform(data);

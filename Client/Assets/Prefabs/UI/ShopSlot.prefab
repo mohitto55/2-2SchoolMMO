@@ -573,6 +573,82 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1290835759905851550}
     m_Modifications:
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_PressedColor.a
+      value: 0.4627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.a
+      value: 0.3254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.a
+      value: 0.14117648
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6182369016000785947}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BuyItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopItemSlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3461027281225519494, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4862566590038572340, guid: 7d629adf14aec524b95a75fe9713effe, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

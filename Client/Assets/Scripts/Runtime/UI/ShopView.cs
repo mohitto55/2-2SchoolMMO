@@ -32,22 +32,17 @@ public class ShopView : UIView
 
         for (int i = 0; i < _slots.Count; i++)
         {
-            ItemSlotViewModel slotViewModel = new ItemSlotViewModel(new InventorySlotModel(), ItemSpriteDataTable);
+            ItemSlotViewModel slotViewModel = new ItemSlotViewModel(new ItemSlotModel(), ItemSpriteDataTable);
             _slots[i].RegisterViewModel(slotViewModel);
             _slotViewModels.Add(slotViewModel);
         }
-    }
-
-    public void SlotUpdate(Character character)
-    {
-        NetworkManager.Instance.SendPacket(EHandleType.InventoryItemDataRequest, new DtoMessage());
     }
 
     public void SetSlotModel(int slotIndex, DtoItem dtoItem)
     {
         if (slotIndex >= 0 && slotIndex < _slotViewModels.Count)
         {
-            InventorySlotModel slotModel = new InventorySlotModel();
+            ItemSlotModel slotModel = new ItemSlotModel();
             slotModel.count = dtoItem.count;
             slotModel.item = dtoItem;
             if (ItemSpriteDataTable.ContainsKey(dtoItem.itemId))

@@ -1,4 +1,3 @@
-using Runtime.DB.Model;
 using UnityEngine;
 
 public class ShopItemResponseHandler : PacketHandler<DtoShopData>
@@ -18,7 +17,6 @@ public class ShopItemResponseHandler : PacketHandler<DtoShopData>
         if (UIView.TryGetView("Shop", out shopView)){
             for (int i = 0; i < data.itemCount; i++)
             {
-                Debug.Log("›o »ý¼º " + data.shopItems[i].name);
                 shopView.SetSlotModel(i, data.shopItems[i]);
             }
         }

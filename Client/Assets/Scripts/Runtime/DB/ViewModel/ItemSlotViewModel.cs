@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Runtime.DB.ViewModel
 {
     [System.Serializable]
-    public class ItemSlotViewModel : ViewModel<InventorySlotModel>
+    public class ItemSlotViewModel : ViewModel<ItemSlotModel>
     {
-        public InventorySlotModel slotItem
+        public ItemSlotModel slotItem
         {
             get => m_model;
             set
@@ -17,7 +17,7 @@ namespace Runtime.DB.ViewModel
             }
         }
         private Dictionary<int, ItemSpriteData> itemSpriteDataTable;
-        public ItemSlotViewModel(InventorySlotModel model, Dictionary<int, ItemSpriteData> itemSpriteDataTable) : base(model)
+        public ItemSlotViewModel(ItemSlotModel model, Dictionary<int, ItemSpriteData> itemSpriteDataTable) : base(model)
         {
             this.itemSpriteDataTable = itemSpriteDataTable;
         }

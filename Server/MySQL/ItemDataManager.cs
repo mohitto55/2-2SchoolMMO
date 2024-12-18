@@ -38,5 +38,9 @@ namespace Server.MySQL
                 return itemTable[itemId];
             return null;
         }
+        public static bool IsCorrectItemData(int itemId)
+        {
+            return itemTable.ContainsKey(itemId) ? true : false;
+        }
     }
 }

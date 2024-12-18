@@ -35,7 +35,7 @@ public class InventoryView : UIView
 
         for (int i = 0; i < _slots.Count; i++)
         {
-            ItemSlotViewModel slotViewModel = new ItemSlotViewModel(new InventorySlotModel(), ItemSpriteDataTable);
+            ItemSlotViewModel slotViewModel = new ItemSlotViewModel(new ItemSlotModel(), ItemSpriteDataTable);
             _slots[i].RegisterViewModel(slotViewModel);
             _slotViewModels.Add(slotViewModel);
         }
@@ -61,7 +61,7 @@ public class InventoryView : UIView
     {
         if(slotIndex >= 0 && slotIndex < _slotViewModels.Count)
         {
-            InventorySlotModel slotModel = new InventorySlotModel();
+            ItemSlotModel slotModel = new ItemSlotModel();
             slotModel.count = dtoSlot.item.count;
             slotModel.item = dtoSlot.item;
             if (ItemSpriteDataTable.ContainsKey(dtoSlot.item.itemId)) {

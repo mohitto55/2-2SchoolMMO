@@ -10,7 +10,7 @@ public class ItemSlot : UIView
     [SerializeField] protected Image _itemImage;
     [SerializeField] protected Button _itemImageCover;
     [SerializeField] protected TextMeshProUGUI _itemCountText;
-
+    protected ItemSlotModel _itemSlotData;
     protected override void Awake()
     {
         base.Awake();
@@ -22,12 +22,12 @@ public class ItemSlot : UIView
         ItemSlotViewModel itemSlotViewModel = (ItemSlotViewModel)sender;
         if (itemSlotViewModel != null)
         {
-            InventorySlotModel itemSlotData = itemSlotViewModel.slotItem;
-            SlotUpdate(itemSlotData);
+            _itemSlotData = itemSlotViewModel.slotItem;
+            SlotUpdate(_itemSlotData);
         }
     }
 
-    public virtual void SlotUpdate(InventorySlotModel itemSlotData)
+    public virtual void SlotUpdate(ItemSlotModel itemSlotData)
     {
         if (itemSlotData == null || itemSlotData.count == 0 || itemSlotData.sprite == null)
         {

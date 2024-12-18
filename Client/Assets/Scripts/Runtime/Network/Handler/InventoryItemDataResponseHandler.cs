@@ -25,7 +25,7 @@ public class InventoryItemDataResponseHandler : PacketHandler<DtoItemSlotData>
             {
                 var slotItem = data.slotItems[i];
                 int inventorySlot = slotItem.slotIndex;
-                InventorySlotModel inventorySlotModel = new InventorySlotModel();
+                ItemSlotModel inventorySlotModel = new ItemSlotModel();
                 inventorySlotModel.count = slotItem.item.count;
                 inventoryView.SetInventorySlotModel(inventorySlot, slotItem);
             }
